@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { firebaseConnect } from 'react-redux-firebase';
 import { 
 	Paper,
 	Divider,
 	TextField,
-	FlatButton,
 	RaisedButton
 } from 'material-ui';
+
+import { loginSuccess, loginFail } from './Login.actions';
 // css
 import './Login.css'
 
@@ -28,7 +30,7 @@ const renderField = ({input, label, type, meta: {touched, error, invalid}}) => {
 };
 
 
-class LoginForm extends Component{
+class LoginContainer extends Component{
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -37,7 +39,15 @@ class LoginForm extends Component{
 	}
 
 	onFormSubmit(props){
-		console.log(props)	
+		// this.props.loginUser(props);
+		this.props.firebase.login(props)
+			.then(res => {
+				return (
+					this.props.loginSuccess(res),
+					this.context.router.push('/')
+				)
+			})
+			.catch(err => this.props.loginFail(err))
   }
 
 
@@ -82,33 +92,41 @@ class LoginForm extends Component{
 		)
 	}
 }
+
+const wrappedLogin = firebaseConnect()(LoginContainer)
+
 // form validation
 function validate(values){
 	const errors = {}
-
 	if(!values.email){
 		errors.email = 'Email is required.'
 	}
-
 	if(values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,5}$/i.test(values.email)){
 		errors.email = 'Invalid email address.'
 	}
-
 	if(!values.password){
 		errors.password = 'Password is required.'
 	}
-
 	return errors
 }
-
 
 const form = reduxForm({
 	form: 'LoginForm',
 	validate
 })
 
+LoginContainer.contextTypes = {
+	router: PropTypes.object.isRequired,
+}
+
+
+const mapStateToProps = (state) => {
+	return {
+		
+	}
+}
 
 export let Login = connect(
 	null,
-	{}
-)(form(LoginForm))
+	{loginSuccess, loginFail}
+)(form(wrappedLogin))

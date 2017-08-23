@@ -10,6 +10,12 @@ export const checkAuth = function (ComposedComponent) {
       }
     }
 
+    componentWillUpdate(nextProps) {
+      if (nextProps.isLoggedIn) {
+        this.context.router.push('/');
+      }
+    }
+
     render() {
       return (
         <ComposedComponent {...this.props} />
@@ -27,7 +33,7 @@ export const checkAuth = function (ComposedComponent) {
 
   function mapStateToProps(state) {
     return {
-      isLoggedIn: false,
+      isLoggedIn: state.auth.isLoggedIn,
     };
   }
 

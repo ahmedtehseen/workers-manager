@@ -1,9 +1,10 @@
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
-import { CounterEpic } from './containers';
+import { LoginEpic, AppEpic } from './modules';
 
 const epics = combineEpics(
-	CounterEpic.increment,
+	AppEpic.hideSnackbar,
+	LoginEpic.userLogin
 );
 
 export const epicMiddleware = createEpicMiddleware(epics);

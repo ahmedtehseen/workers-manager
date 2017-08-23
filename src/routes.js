@@ -1,10 +1,12 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import {App, Login} from './containers';
-import {Dashboard} from './containers';
-import {Counter} from './containers';
 import { requireAuth, checkAuth } from './util';
+import {
+	App, 
+	Login, 
+	Dashboard
+} from './modules';
 
 
 export default (

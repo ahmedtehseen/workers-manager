@@ -12,7 +12,7 @@ export const requireAuth = function (ComposedComponent) {
 
     componentWillUpdate(nextProps) {
       if (!nextProps.isLoggedIn) {
-        this.context.router.push('/');
+        this.context.router.push('/login');
       }
     }
 
@@ -33,7 +33,7 @@ export const requireAuth = function (ComposedComponent) {
 
   function mapStateToProps(state) {
     return {
-      isLoggedIn: false,
+      isLoggedIn: state.auth.isLoggedIn
     };
   }
 

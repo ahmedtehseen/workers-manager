@@ -4,15 +4,16 @@ import { routerReducer } from 'react-router-redux'
 import { firebaseStateReducer } from 'react-redux-firebase'
 
 import {
-	CounterInitialState,
- 	CounterReducer 
-} from './containers';
+	AppReducer,
+	LoginReducer
+} from './modules';
 
 export const rootInitialState = {
 }
 
 export let rootReducer = combineReducers({
-	counter: CounterReducer,
+	auth: LoginReducer,
+	snackbar: AppReducer,
 	form: formReducer,
 	routing: routerReducer,
 	firebase: firebaseStateReducer
