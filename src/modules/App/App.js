@@ -8,7 +8,7 @@ import './App.css';
 class AppComponent extends Component {
   render() {
     return (
-      <div>
+      <div className='app-container'>
         {this.props.children}
         <Snackbar
         open={this.props.snackbar.response}

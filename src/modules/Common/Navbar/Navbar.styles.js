@@ -1,6 +1,7 @@
 const styles = {
   navbar: {
-  	backgroundColor: '#F5F5F5'
+  	backgroundColor: '#F5F5F5',
+  	position: 'fixed'
   },
   divider: {
 		height: '64px',
