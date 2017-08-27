@@ -4,6 +4,7 @@ import { RaisedButton } from 'material-ui';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 
+import { Navbar } from '../Common';
 import { userLogout } from './Dashboard.actions';
 
 const themeColor = '#7AB15A';
@@ -16,7 +17,7 @@ export class DashboardContainer extends Component {
 	render() {
 		return (
 			<div>
-				<h1>Dashboard</h1>
+				<Navbar logout={() => this.handleLogout()}/>
 				<RaisedButton 
 					buttonStyle={{ 
 						borderRadius: '2em',
