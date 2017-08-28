@@ -14,7 +14,7 @@ export const rootInitialState = {
 export let rootReducer = combineReducers({
 	auth: LoginReducer,
 	snackbar: AppReducer,
-	form: formReducer,
 	routing: routerReducer,
+	form: formReducer,
 	firebase: firebaseStateReducer
 });

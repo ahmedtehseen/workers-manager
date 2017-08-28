@@ -6,3 +6,8 @@
 .task-button {
 	margin: 0 !important;
 }
+
+.signup-form {
+	display: flex;
+	flex-direction: column;
+}

@@ -2,7 +2,6 @@ const styles = {
 	taskContainer:{
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: '	',
 		width: '80%',
 		marginLeft: '15%',
 		marginRight: '5%',
@@ -18,9 +17,9 @@ const styles = {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		paddingBottom: '0',
-		width: '150px',
-		height: '100px',
+		paddingBottom: '0px',
+		width: '12em',
+		height: '7em',
 	},
 	cardText: {
 		display: 'flex',
@@ -32,8 +31,8 @@ const styles = {
 
 	},
 	icon: {
-		height: '40',
-		width: '40',
+		height: '40px',
+		width: '40px',
 		marginRight: '1em'
 	},
 	text: {

@@ -13,13 +13,29 @@ import {
 import NoteAdd from 'material-ui/svg-icons/action/note-add';
 import Alarm from 'material-ui/svg-icons/action/alarm';
 import CheckCircle from 'material-ui/svg-icons/action/check-circle';
+import Bookmark from 'material-ui/svg-icons/action/bookmark';
 import ErrorOutline from 'material-ui/svg-icons/alert/error-outline';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import Layers from 'material-ui/svg-icons/maps/layers';
+
+import { AddTask } from '../AddTask';
 // styles
 import styles from './Dashboard.styles';
 
 class DashboardLayoutComponent extends Component {
+
+	constructor(props) {
+    super(props);
+    this.state = {
+    	value: 1,
+    	openDialog: false
+    };
+  }
+
+  handleDialogToggle = () => {
+    this.setState({openDialog: !this.state.openDialog});
+  };
+
 	render() {
 		return (
 			<div style={styles.taskContainer}>
@@ -81,6 +97,7 @@ class DashboardLayoutComponent extends Component {
 				      backgroundColor='rgb(228,81,81)'
 				      labelStyle={{ color: '#fff' }}
 				      className='task-button'
+				      onClick={() => this.handleDialogToggle()}
 				    />
 					</div>
 					<div style={styles.tableBodyContainer}>
@@ -88,8 +105,9 @@ class DashboardLayoutComponent extends Component {
 					    <TableHeader displaySelectAll={false}>
 					      <TableRow>
 					        <TableHeaderColumn></TableHeaderColumn>
-					        <TableHeaderColumn>Name</TableHeaderColumn>
-					        <TableHeaderColumn>Status</TableHeaderColumn>
+					        <TableHeaderColumn><Layers style={{}} color={'#7AB15A'} hoverColor={'#77B443'}/>Current Tasks</TableHeaderColumn>
+					        <TableHeaderColumn><Bookmark style={{}} color={'#7AB15A'} hoverColor={'#77B443'}/>Assigned to</TableHeaderColumn>
+					        <TableHeaderColumn>Edit</TableHeaderColumn>
 					      </TableRow>
 					    </TableHeader>
 					    <TableBody displayRowCheckbox={false}>
@@ -97,31 +115,13 @@ class DashboardLayoutComponent extends Component {
 					        <TableRowColumn>1</TableRowColumn>
 					        <TableRowColumn>John Smith</TableRowColumn>
 					        <TableRowColumn>Employed</TableRowColumn>
-					      </TableRow>
-					      <TableRow>
-					        <TableRowColumn>2</TableRowColumn>
-					        <TableRowColumn>Randal White</TableRowColumn>
-					        <TableRowColumn>Unemployed</TableRowColumn>
-					      </TableRow>
-					      <TableRow>
-					        <TableRowColumn>3</TableRowColumn>
-					        <TableRowColumn>Stephanie Sanders</TableRowColumn>
-					        <TableRowColumn>Employed</TableRowColumn>
-					      </TableRow>
-					      <TableRow>
-					        <TableRowColumn>4</TableRowColumn>
-					        <TableRowColumn>Steve Brown</TableRowColumn>
-					        <TableRowColumn>Employed</TableRowColumn>
-					      </TableRow>
-					      <TableRow>
-					        <TableRowColumn>5</TableRowColumn>
-					        <TableRowColumn>Christopher Nolan</TableRowColumn>
-					        <TableRowColumn>Unemployed</TableRowColumn>
+					        <TableRowColumn>edit</TableRowColumn>
 					      </TableRow>
 					    </TableBody>
 					  </Table>
 					</div>
 				</div>
+				<AddTask openDialog={this.state.openDialog} handleDialogToggle={() => this.handleDialogToggle()}/>
 			</div>
 		);
 	};
