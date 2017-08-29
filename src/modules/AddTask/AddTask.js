@@ -10,62 +10,26 @@ import { connect } from 'react-redux';
 import { firebaseConnect, pathToJS } from 'react-redux-firebase';
 import { SelectField, TextField, DatePicker } from 'redux-form-material-ui';
 import AttachFile from 'material-ui/svg-icons/editor/attach-file';
-import {  } from './AddTask.actions';
+import { addTask } from './AddTask.actions';
 
 import './AddTask.css'
 
 const themeColor = '#7AB15A';
 
-// const renderField = ({input, label, multiLine, rows, fullWidth, type, meta: {touched, error, invalid}}) => {
-// 	return (
-// 		<TextField
-//       hintText={label}
-//       className='task-modal-text-field'
-//       errorText={touched ? error : ''}
-//       type={type}
-//       fullWidth={ fullWidth ? fullWidth : false}
-//       multiLine={multiLine ? multiLine : false}
-//       hintStyle={multiLine ? { bottom: 'auto', top: '12px' } : { }}
-//       rows={ rows  ? parseInt(rows) : 1}
-//       underlineFocusStyle={{ borderColor: themeColor }}
-//       floatingLabelStyle={{ color: themeColor }}
-//       {...input}
-//     />
-// 	)
-// }
-
-// const renderSelectField = props => (
-//   <SelectField
-//     hintText="Select worker name"
-//     underlineFocusStyle={{ borderColor: themeColor }}
-//     errorText={props.meta.touched && props.meta.error}
-//     {...props}
-//     onChange={(event, index, value) => props.onChange(value)}>
-//   </SelectField>
-// )
-
-
 class AddTaskComponent extends Component {
 
 	onFormSubmit(props){
-		// const worker = this.state.value
 		const file = this.file.files[0]
-		console.log('worker', props, file)
-		// this.props.addUser(props);
-		// this.props.reset();
-		// this.props.handleDialogToggle();
+		const status = 'pending';
+		const { dateOfSubmition, details, taskTitle, worker: { name, uid } } = props;
+		const adminId = this.props.user.uid
+		const obj = { dateOfSubmition, details, taskTitle, assignTo:name , workerId: uid, file, adminId, status }
+		this.props.addTask(obj);
+		// console.log('checking obj',obj)
+		this.props.reset();
+		this.props.handleDialogToggle();
+		this.file = null;
   }
-  // state = {
-  //   name:'',
-  // };
-
-  // handleChange = (event, index, value ) => {
-  // 	const name = event.target.innerHTML
-  // 	return (
-  // 		console.log(event.target.innerHTML, index, value ),
-  // 		this.setState({name})
-  // 	)
-  // };
 
 	render() {
 		const {handleSubmit} = this.props;
@@ -83,11 +47,15 @@ class AddTaskComponent extends Component {
 						<Field name='taskTitle' component={TextField} hintText='Task Title' type='text' />
 						&nbsp;&nbsp;&nbsp;
 						<Field name="worker" component={SelectField} hintText="Select worker name">
-		          <MenuItem value={{name: 'abc', uid: 'asdasdasd-asd-ad-asd-ads'}} primaryText="ABC"/>
-		          <MenuItem value={{abc: 'sadasd'}} primaryText="Every Night" />
-		          <MenuItem value={3} primaryText="Weeknights" />
-		          <MenuItem value={4} primaryText="Weekends" />
-		          <MenuItem value={5} primaryText="Weekly" />
+							{
+								this.props.workers !== null ?
+								Object.keys(this.props.workers).filter((key) => {
+									return this.props.workers[key].role == 'worker'
+								}).map((key) => (
+										<MenuItem key={key} value={this.props.workers[key]} primaryText={this.props.workers[key].name} />
+									))
+								: <MenuItem value={'No user'} primaryText="Please wait..." />
+							}
 		        </Field>
 	      	</div>
 	      	<br/>
@@ -110,7 +78,7 @@ class AddTaskComponent extends Component {
 				      <input type="file" style={styles.uploadInput} ref={(file) => { this.file = file }}/>
 				    </FlatButton>
 						&nbsp;&nbsp;&nbsp;
-						<Field name='dateOfCompletion' component={DatePicker} format={null} hintText='Date of Completion' />
+						<Field name='dateOfSubmition' component={DatePicker} format={null} hintText='Date of Completion' />
 					</div>
 					<RaisedButton 
 						buttonStyle={{ 
@@ -124,7 +92,7 @@ class AddTaskComponent extends Component {
 						}}
 						labelColor='#fff'
 						backgroundColor={themeColor}
-						label='Add User' 
+						label='Assign Task' 
 						type='submit' 
 					/>
 				</form>
@@ -137,7 +105,6 @@ const wrappedAddTask = firebaseConnect()(AddTaskComponent)
 
 function validate(values){
 	const errors = {}
-	console.log('validate', values)
 	if(!values.taskTitle){
 		errors.taskTitle = 'Title is required.'
 	}
@@ -149,8 +116,8 @@ function validate(values){
 		errors.details = 'Please provide some details.'
 	}
 
-	if(!values.dateOfCompletion){
-		errors.dateOfCompletion = 'Please select completion date.'
+	if(!values.dateOfSubmition){
+		errors.dateOfSubmition = 'Please select completion date.'
 	}
 
 	return errors
@@ -161,9 +128,17 @@ const form = reduxForm({
 	validate
 })
 
+
+const mapStateToProps = (state) => {
+	return {
+		user: pathToJS(state.firebase, 'auth'),
+		workers: state.dashboard.workers
+	}
+}
+
 export let AddTask = connect(
-	null, 
-	{}
+	mapStateToProps, 
+	{addTask}
 )(form(wrappedAddTask));
 
 

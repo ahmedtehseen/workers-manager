@@ -10,7 +10,7 @@ const styles = {
 		marginTop: '-8px'
 	},
 	dropdown: {
-		width: '200',
+		width: '200px',
 	},
 	avatar: {
 		marginRight: '-1em',

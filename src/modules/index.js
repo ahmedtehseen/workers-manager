@@ -4,4 +4,6 @@ export { AddUserEpic } from './AddUser';
 
 export { App, AppEpic, AppReducer } from './App';
 
-export { Dashboard } from './Dashboard';
+export { Dashboard, DashboardEpic, DashboardReducer } from './Dashboard';
+
+export { TaskEpic } from './AddTask';

@@ -6,12 +6,15 @@ import { firebaseConnect } from 'react-redux-firebase';
 
 import { Navbar, SideMenu, Footer } from '../Common';
 import { DashboardLayout } from './DashboardLayout';
-import { userLogout } from './Dashboard.actions';
+import { userLogout, getAllWorkers } from './Dashboard.actions';
 
 
 const themeColor = '#7AB15A';
 
 export class DashboardContainer extends Component {
+	componentWillMount() {
+    this.props.getAllWorkers();
+  }
 	handleLogout() {
 		this.props.firebase.logout()
 		.then(() => this.props.userLogout())
@@ -22,7 +25,7 @@ export class DashboardContainer extends Component {
 				<Navbar logout={() => this.handleLogout()}/>
 				<SideMenu/>
 				<div style={{ display: 'flex', flex: '1' }}>
-				<DashboardLayout />
+					<DashboardLayout />
 				</div>
 				<Footer/>
 			</div>
@@ -40,6 +43,6 @@ const mapStateToProps = (state) => {
 
 export let Dashboard = connect(
 	null,
-	{userLogout}
+	{userLogout, getAllWorkers}
 )(wrappedDashboard);
 

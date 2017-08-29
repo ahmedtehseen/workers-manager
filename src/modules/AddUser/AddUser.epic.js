@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import axios from 'axios';
 import { Observable } from 'rxjs';
 import { getFirebase } from 'react-redux-firebase';
 import { 
@@ -7,18 +8,20 @@ import {
 	ADD_USER_FAIL
 } from './AddUser.actions';
 
+const authenticateUser = 'https://us-central1-trouble-tickets-147f2.cloudfunctions.net/authenticateUser'
 
 export class AddUserEpic {
 	static addUser = (action$) =>
 		action$.ofType(ADD_USER)
 		.switchMap(({payload}) => {
+			const timestamp = firebase.database.ServerValue.TIMESTAMP;
 			const { email, password, name, role } = payload;
-			return Observable.fromPromise(firebase.auth().createUserWithEmailAndPassword(email, password))
+			const userObj = {email, password, name, role, timestamp}
+			return Observable.fromPromise(axios.post(authenticateUser, userObj))
 				.switchMap((res) => {
-					const timestamp = firebase.database.ServerValue.TIMESTAMP;
 					return Observable.of({
 						type: ADD_USER_SUCCESS,
-						payload: { uid: res.uid, email, name, role, timestamp },
+						payload: res,
 						message: 'User added successfully..!'
 					})
 				}).catch((err) => {
@@ -30,17 +33,4 @@ export class AddUserEpic {
 				})
 		})
 
-	static createUser = (action$) =>
-		action$.ofType(ADD_USER_SUCCESS)
-		.switchMap(({ payload }) => {
-				const { uid, name, email, role, timestamp } = payload
-        return Observable.of(
-          firebase.database().ref('users/'+uid)
-          .set({name, email, role, timestamp, uid})
-        )
-      }).switchMap(()=> {
-      	return Observable.of({
-      		type: 'ADDED_USER'
-      	})
-      })
 }

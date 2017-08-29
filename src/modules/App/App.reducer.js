@@ -8,6 +8,14 @@ import {
 	ADD_USER_FAIL
 } from '../AddUser';
 
+import {
+	CREATE_TASK,
+	ADD_TASK_SUCCESS,
+	ADD_TASK_FAIL,
+	FILE_UPLOAD_FAIL
+} from '../AddTask';
+
+
 
 const initialState = {
 	response: false,
@@ -20,6 +28,10 @@ export const AppReducer = (state = initialState, action) => {
 		case USER_LOGIN_FAIL:
 		case ADD_USER_SUCCESS:
 		case ADD_USER_FAIL:
+		case CREATE_TASK:
+		case ADD_TASK_SUCCESS:
+		case ADD_TASK_FAIL:
+		case FILE_UPLOAD_FAIL:
 			return Object.assign({}, state, {
 				response: true,
 				message: action.message

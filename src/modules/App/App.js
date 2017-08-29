@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Snackbar } from 'material-ui';
 import { connect } from 'react-redux'
-
-
+// styles
 import './App.css';
 
 class AppComponent extends Component {
@@ -22,10 +21,11 @@ class AppComponent extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		snackbar: state.snackbar
+		snackbar: state.app
 	}
 }
 
 export const App = connect(
-	mapStateToProps
+	mapStateToProps,
+  {}
 )(AppComponent)

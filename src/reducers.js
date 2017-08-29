@@ -5,7 +5,8 @@ import { firebaseStateReducer } from 'react-redux-firebase'
 
 import {
 	AppReducer,
-	LoginReducer
+	LoginReducer,
+	DashboardReducer
 } from './modules';
 
 export const rootInitialState = {
@@ -13,7 +14,8 @@ export const rootInitialState = {
 
 export let rootReducer = combineReducers({
 	auth: LoginReducer,
-	snackbar: AppReducer,
+	app: AppReducer,
+	dashboard: DashboardReducer,
 	routing: routerReducer,
 	form: formReducer,
 	firebase: firebaseStateReducer

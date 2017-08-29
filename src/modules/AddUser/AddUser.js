@@ -103,6 +103,12 @@ const form = reduxForm({
 	validate
 })
 
+const mapStateToProps = (state) => {
+	return {
+		
+	}
+}
+
 export let AddUser = connect(
 	null, 
 	{addUserSuccess, addUserFail, addUser}
