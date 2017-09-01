@@ -15,6 +15,10 @@ import {
 	FILE_UPLOAD_FAIL
 } from '../AddTask';
 
+import {
+	DELETE_TASK_SUCCESS,
+	DELETE_TASK_FAIL,
+} from '../Dashboard';
 
 
 const initialState = {
@@ -32,6 +36,8 @@ export const AppReducer = (state = initialState, action) => {
 		case ADD_TASK_SUCCESS:
 		case ADD_TASK_FAIL:
 		case FILE_UPLOAD_FAIL:
+		case DELETE_TASK_SUCCESS:
+		case DELETE_TASK_FAIL:
 			return Object.assign({}, state, {
 				response: true,
 				message: action.message

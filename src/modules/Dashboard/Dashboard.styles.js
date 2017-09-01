@@ -62,7 +62,8 @@ const styles = {
 	},
 	tableText: {
 		color: '#9E9E9E',
-		marginLeft: '2em'
+		marginLeft: '2em',
+		fontSize: '15px'
 	},
 	tableBodyContainer: {
 		padding: '2em'

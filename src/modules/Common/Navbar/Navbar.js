@@ -17,9 +17,12 @@ const themeColor = '#7AB15A';
 const IconLeft = (props) => {
 	return (
 		<div style={{ display: 'flex', flexDirection: 'row' }}>
-			<IconButton onClick={props.handleDialogToggle}>
-	      <PersonAdd style={{}} color={'#E0E0E0'} hoverColor={'#BDBDBD'}/>
-			</IconButton>
+			{
+				props.userRole !== null && props.userRole === 'worker' ? '' : 
+				<IconButton onClick={props.handleDialogToggle}>
+		      <PersonAdd style={{}} color={'#E0E0E0'} hoverColor={'#BDBDBD'}/>
+				</IconButton>
+			}
 	    <IconButton>
 	      <Forum style={{}} color={'#E0E0E0'} hoverColor={'#BDBDBD'}/>
 	    </IconButton>
@@ -45,7 +48,7 @@ const IconLeft = (props) => {
 	      iconButton={<ExpandMore/>}
 	      iconStyle={{ fill: themeColor }}
 	    >
-	      <MenuItem value={1} primaryText="Manager" />
+	      <MenuItem value={1} primaryText={props.userRole !== null && props.userRole === 'admin' ? 'Manager' : 'Worker'} />
 	      <MenuItem value={2} primaryText="Logout" onClick={props.logout}/>
 	    </DropDownMenu>
 			<div style={styles.divider}/>
@@ -69,15 +72,23 @@ class NavbarComponent extends Component {
     this.setState({openDialog: !this.state.openDialog});
   };
 
-
   handleChange = (event, index, value) => this.setState({value});
+
 	render() {
 		return (
 			<div>
 				<AppBar
 					style={styles.navbar}
 			    iconElementLeft={<div></div>}
-			    iconElementRight={<IconLeft handleChange={this.handleChange} value={this.state.value} logout={this.props.logout} handleDialogToggle={() => this.handleDialogToggle()}/>}
+			    iconElementRight={
+			    	<IconLeft 
+			    		handleChange={this.handleChange} 
+			    		value={this.state.value} 
+			    		logout={this.props.logout} 
+			    		handleDialogToggle={() => this.handleDialogToggle()}
+			    		userRole={this.props.userRole}
+			    	/>
+			    }
 			  />
 			  <AddUser openDialog={this.state.openDialog} handleDialogToggle={() => this.handleDialogToggle()}/>
 		  </div>

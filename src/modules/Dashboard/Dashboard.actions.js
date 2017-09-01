@@ -8,6 +8,9 @@ export const GET_TASKS = 'GET_TASKS';
 export const GET_TASKS_SUCCESS = 'GET_TASKS_SUCCESS';
 export const GET_TASKS_FAIL = 'GET_TASKS_FAIL';
 
+export const DELETE_TASK = 'DELETE_TASK';
+export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS';
+export const DELETE_TASK_FAIL = 'DELETE_TASK_FAIL';
 
 export const userLogout = () => {
 	return {
@@ -21,8 +24,9 @@ export const getAllWorkers = () => {
 	}
 } 
 
-export const getTasks = () => {
+export const deleteTask = (key) => {
 	return {
-		type: GET_TASKS
+		type: DELETE_TASK,
+		payload: key
 	}
 }

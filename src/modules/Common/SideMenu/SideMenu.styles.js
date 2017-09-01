@@ -5,6 +5,10 @@ const styles = {
   sidemenu: {
   	backgroundColor: 'rgb(119,180,83)',
   	boxShadow: 'none'
+  },
+  logo: {
+  	width: '120px',
+  	height: '50px',
   }
 };
 

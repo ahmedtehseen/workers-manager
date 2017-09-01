@@ -9,12 +9,12 @@ import {
 const TableMenuButton = (props) => {
 	return (
 		<IconMenu
-      iconButtonElement={<IconButton className='menu-icon'><MoreVertIcon /></IconButton>}
+      iconButtonElement={<IconButton className='menu-icon'><MoreVertIcon color={'#7AB15A'} /></IconButton>}
     >
       <MenuItem primaryText="Edit Task" />
       <MenuItem primaryText="Re-Assign" />
       <MenuItem primaryText="Send message to worker" />
-      <MenuItem primaryText="Delete Task" />
+      <MenuItem primaryText="Delete Task" onClick={props.deleteTask}/>
     </IconMenu>
 	)
 }

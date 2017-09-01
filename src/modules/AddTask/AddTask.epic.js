@@ -17,7 +17,7 @@ export class TaskEpic {
 		action$.ofType(ADD_TASK)
 			.switchMap(({payload}) => {
 				return Observable.create(oberver => {
-					const { dateOfSubmition, details, taskTitle, assignTo, workerId, file, adminId, status } = payload;
+					const { completionDate, details, taskTitle, assignTo, workerId, file, adminId, status } = payload;
 					const fileStore = firebase.storage().ref(`task-files/${Date.now()}/${file.name}`).put(file, {contentType: file.type});
 					fileStore.on('state_changed',() => {}, (err) => {
 						oberver.next({
@@ -28,7 +28,7 @@ export class TaskEpic {
 					}, () => {
 						const fileURL = fileStore.snapshot.downloadURL;
 						const timestamp = firebase.database.ServerValue.TIMESTAMP;
-						const obj = { fileURL, dateOfSubmition, details, taskTitle, assignTo, workerId, timestamp, adminId, status };
+						const obj = { fileURL, completionDate, details, taskTitle, assignTo, workerId, timestamp, adminId, status };
 						oberver.next(createTask(obj));
 					})
 				})
@@ -39,8 +39,7 @@ export class TaskEpic {
 			.switchMap(({payload}) => {
 				const { workerId } = payload;
 				return Observable.concat(
-					getFirebase().push('all-tasks', payload),
-					getFirebase().push(`worker-tasks/${workerId}`, payload)
+					getFirebase().push('all-tasks', payload)
 				).switchMap((res) => {
 					return Observable.of({
 						type: ADD_TASK_SUCCESS,

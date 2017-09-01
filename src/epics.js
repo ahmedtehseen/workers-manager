@@ -6,11 +6,10 @@ const epics = combineEpics(
 	AppEpic.hideSnackbar,
 	LoginEpic.userLogin,
 	AddUserEpic.addUser,
-	// AddUserEpic.createUser,
 	TaskEpic.uploadFile,
 	TaskEpic.addTask,
 	DashboardEpic.getAllWorkers,
-	DashboardEpic.getTasks
+	DashboardEpic.deleteTask
 );
 
 export const epicMiddleware = createEpicMiddleware(epics);

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { firebaseConnect, pathToJS } from 'react-redux-firebase';
 import { SelectField, TextField, DatePicker } from 'redux-form-material-ui';
 import AttachFile from 'material-ui/svg-icons/editor/attach-file';
-import { addTask } from './AddTask.actions';
+import { addTask, createTask } from './AddTask.actions';
 
 import './AddTask.css'
 
@@ -22,10 +22,15 @@ class AddTaskComponent extends Component {
 		const file = this.file.files[0]
 		const status = 'pending';
 		const { dateOfSubmition, details, taskTitle, worker: { name, uid } } = props;
-		const adminId = this.props.user.uid
-		const obj = { dateOfSubmition, details, taskTitle, assignTo:name , workerId: uid, file, adminId, status }
-		this.props.addTask(obj);
-		// console.log('checking obj',obj)
+		const adminId = this.props.user.uid;
+		const completionDate = dateOfSubmition.getTime();
+		const objWithFile = { completionDate, details, taskTitle, assignTo:name , workerId: uid, file, adminId, status }
+		const objWithoutFile = { completionDate, details, taskTitle, assignTo:name , workerId: uid, adminId, status }
+		if(file) {
+			this.props.addTask(objWithFile);
+		} else {
+			this.props.createTask(objWithoutFile)
+		}
 		this.props.reset();
 		this.props.handleDialogToggle();
 		this.file = null;
@@ -60,7 +65,15 @@ class AddTaskComponent extends Component {
 	      	</div>
 	      	<br/>
 	      	<div className='middle-textarea'>
-						<Field name='details' multiLine={true} rows={3} component={TextField} hintText='Task Details' fullWidth={true}/>
+						<Field 
+							name='details' 
+							multiLine={true} 
+							rows={3} 
+							component={TextField} 
+							hintText='Task Details' 
+							fullWidth={true}
+							rowsMax={5}
+						/>
 					</div>
 					<br/>
 					<div className='bottom-task-fields'>
@@ -138,7 +151,7 @@ const mapStateToProps = (state) => {
 
 export let AddTask = connect(
 	mapStateToProps, 
-	{addTask}
+	{addTask, createTask}
 )(form(wrappedAddTask));
 
 
