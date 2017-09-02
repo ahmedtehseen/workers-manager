@@ -4,6 +4,8 @@ import {Dialog, TextField, RaisedButton} from 'material-ui';
 import { connect } from 'react-redux';
 import { firebaseConnect, pathToJS } from 'react-redux-firebase';
 import { addUserSuccess, addUserFail, addUser } from './AddUser.actions';
+// styles
+import './AddUser.css';
 
 const themeColor = '#7AB15A';
 
@@ -38,6 +40,7 @@ class AddUserComponent extends Component {
 	      open={this.props.openDialog}
 	      onRequestClose={this.props.handleDialogToggle}
 	      contentStyle={{ display: 'flex', justifyContent: 'center'}}
+	      className='add-user-modal'
 	    >
 	      <form onSubmit={handleSubmit((props) => this.onFormSubmit(props))} className='signup-form'>
 					<Field name='name' component={renderField} label='User Name' type='text' />

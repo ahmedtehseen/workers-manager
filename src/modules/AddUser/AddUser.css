@@ -1,0 +1,8 @@
+.add-user-modal>div>div {
+	width: 35% !important;
+	top: -1em !important;
+}
+
+.add-user-modal>div>div>div {
+	padding: 0 1em !important;
+}

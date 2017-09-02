@@ -12,6 +12,8 @@ export const DELETE_TASK = 'DELETE_TASK';
 export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS';
 export const DELETE_TASK_FAIL = 'DELETE_TASK_FAIL';
 
+export const SET_CURRENT_TASK = 'SET_CURRENT_TASK';
+
 export const userLogout = () => {
 	return {
 		type: USER_LOGOUT,
@@ -28,5 +30,12 @@ export const deleteTask = (key) => {
 	return {
 		type: DELETE_TASK,
 		payload: key
+	}
+}
+
+export const currentTask = (task) => {
+	return {
+		type: SET_CURRENT_TASK,
+		payload: task
 	}
 }

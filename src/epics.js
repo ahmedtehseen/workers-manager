@@ -1,6 +1,6 @@
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
-import { LoginEpic, AppEpic, AddUserEpic, TaskEpic, DashboardEpic } from './modules';
+import { LoginEpic, AppEpic, AddUserEpic, TaskEpic, DashboardEpic, EditTaskEpic } from './modules';
 
 const epics = combineEpics(
 	AppEpic.hideSnackbar,
@@ -9,7 +9,9 @@ const epics = combineEpics(
 	TaskEpic.uploadFile,
 	TaskEpic.addTask,
 	DashboardEpic.getAllWorkers,
-	DashboardEpic.deleteTask
+	DashboardEpic.deleteTask,
+	EditTaskEpic.uploadFile,
+	EditTaskEpic.editTask
 );
 
 export const epicMiddleware = createEpicMiddleware(epics);
