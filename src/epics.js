@@ -9,6 +9,7 @@ const epics = combineEpics(
 	TaskEpic.uploadFile,
 	TaskEpic.addTask,
 	DashboardEpic.getAllWorkers,
+	// DashboardEpic.getAllManagers,
 	DashboardEpic.deleteTask,
 	DashboardEpic.addNote,
 	DashboardEpic.deleteNote,

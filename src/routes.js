@@ -7,7 +7,9 @@ import {
 	Login, 
 	Dashboard,
 	TaskTable,
-	Task
+	Task,
+	Chat,
+	ChatList
 } from './modules';
 
 

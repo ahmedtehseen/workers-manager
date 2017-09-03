@@ -45,7 +45,7 @@ class TaskComponent extends Component {
 		return (
 			<div>
 				<div style={styles.taskHeader}>
-					<p style={styles.taskText}>{tasks && key !== null ?  tasks[key].taskTitle : ''}</p>
+					<p style={styles.taskText}>{tasks && key !== undefined ? tasks && key !== null ?  tasks[key].taskTitle : '' : ''}</p>
 				 	<RaisedButton
 			      label="Add Notes"
 			      buttonStyle={{ borderRadius: '2em', width: '130px' }}
@@ -63,25 +63,25 @@ class TaskComponent extends Component {
 						<div className='task-time-left'>
 						<Alarm color={themeColor}/>
 						&nbsp;&nbsp;&nbsp;
-						<p><i>{tasks && key !== null ?  moment(tasks[key].completionDate).format("Do,MMM,YYYY") : ''}</i></p>
+						<p><i>{tasks && key !== undefined ? tasks && key !== null ?  moment(tasks[key].completionDate).format("Do,MMM,YYYY") : '' : ''}</i></p>
 						</div>
-						<span className='task-time-right'>Status: <i>{tasks && key !== null ?  tasks[key].status : ''}</i></span>
+						<span className='task-time-right'>Status: <i>{tasks && key !== undefined ? tasks && key !== null ?  tasks[key].status : '' : ''}</i></span>
 					</div>
 					<div className='task-description-section'>
-						<p>{tasks && key !== null ?  tasks[key].details : ''}</p>
+						<p>{tasks && key !== undefined ? tasks && key !== null ?  tasks[key].details : '' : ''}</p>
 					</div>
 					<div>
-						{tasks && key !== null ?  
+						{tasks && key !== undefined ? tasks && key !== null ?  
 							tasks[key].fileURL ? 
 							<a href={tasks[key].fileURL} className='task-file-section'>
 								<AttachFile style={{ transform: 'rotate(45deg)' }}/>
 								<span>Attachment</span>
 							</a>: 
 							''
-						: ''}
+						: '' : ''}
 					</div>
 					{
-						tasks && key !== null ?  
+						tasks && key !== undefined ? tasks && key !== null ?  
 							tasks[key].adminNotes || tasks[key].workerNotes !== undefined ? 
 								<div className='task-notes-section'>
 									<div className='notes-container'>
@@ -134,7 +134,7 @@ class TaskComponent extends Component {
 									</div>
 								</div>
 							: ''  
-						: ''
+						: '' : ''
 					}					
 					{ 
 						user !== null ? 
@@ -163,7 +163,7 @@ class TaskComponent extends Component {
 				<DeliverTask 
 					isOpen={this.state.isDeliverDialogOpen} 
 					handleDialogToggle={() => this.handleDeliverDialogToggle()} 
-					task={tasks && key !== null ?  tasks[key] : null}
+					task={tasks && key !== undefined ? tasks && key !== null ?  tasks[key] : null : null}
 					taskKey= {key}
 				/>
 			</div>	

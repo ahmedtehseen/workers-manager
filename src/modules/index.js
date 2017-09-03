@@ -9,3 +9,5 @@ export { Dashboard, DashboardEpic, DashboardReducer, TaskTable, Task } from './D
 export { TaskEpic } from './AddTask';
 
 export { EditTaskEpic } from './EditTask';
+
+export { Chat, ChatList } from './Chat';
