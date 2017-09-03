@@ -67,6 +67,20 @@ const styles = {
 	},
 	tableBodyContainer: {
 		padding: '2em'
+	},
+	taskHeader: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		padding: '.5em',
+		borderBottom: '1px solid #E0E0E0'
+	},
+	taskText: {
+		fontSize: '16px',
+		fontWeight: '600',
+		margin: '10px',
+		marginLeft: '2em',
 	}
 }
 

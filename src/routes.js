@@ -5,13 +5,18 @@ import { requireAuth, checkAuth } from './util';
 import {
 	App, 
 	Login, 
-	Dashboard
+	Dashboard,
+	TaskTable,
+	Task
 } from './modules';
 
 
 export default (
 	<Route path="/" component={App}>
-		<IndexRoute component={requireAuth(Dashboard)} />
-		<Route path="/login" component={checkAuth(Login)}/>
+		<IndexRoute component={checkAuth(Login)} />
+		<Route path="/dashboard" component={requireAuth(Dashboard)}>
+			<IndexRoute component={TaskTable} />
+			<Route path="/task/:key" component={Task} />
+		</Route>
 	</Route>
 );

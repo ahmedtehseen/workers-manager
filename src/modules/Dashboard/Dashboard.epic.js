@@ -5,12 +5,12 @@ import {
 	GET_WORKERS,
 	GET_WORKERS_SUCCESS,
 	GET_WORKERS_FAIL,
-	GET_TASKS,
-	GET_TASKS_SUCCESS,
-	GET_TASKS_FAIL,
 	DELETE_TASK,
 	DELETE_TASK_SUCCESS,
 	DELETE_TASK_FAIL,
+	ADD_NOTE,
+	ADD_NOTE_SUCCESS, 
+	ADD_NOTE_FAIL,
 } from './Dashboard.actions';
 
 export class DashboardEpic {
@@ -49,4 +49,47 @@ export class DashboardEpic {
 							message: 'Something went wrong, Please try again..!'
 						})
 					})
+
+	static addNote = action$ =>
+		action$.ofType(ADD_NOTE)
+			.switchMap(({payload}) => {
+				const { taskKey } = payload;
+				if(payload.by === 'admin') {
+					delete payload.by;
+					delete payload.taskKey;
+					return Observable.of(getFirebase().push(`all-tasks/${taskKey}/adminNotes`, payload))
+					.switchMap((res) => {
+						return Observable.of({
+							type: ADD_NOTE_SUCCESS,
+							payload: res,
+							message: 'Note added Successfully..!'
+						})
+					})
+					.catch(err => {
+						return Observable.of({
+							type: ADD_NOTE_FAIL,
+							payload: err,
+							message: 'Note addition fail, please try again..!'
+						})
+					})
+				} else if(payload.by === 'worker') {
+					delete payload.by;
+					delete payload.taskKey;
+					return Observable.of(getFirebase().push(`all-tasks/${taskKey}/workerNotes`, payload))
+					.switchMap((res) => {
+						return Observable.of({
+							type: ADD_NOTE_SUCCESS,
+							payload: res,
+							message: 'Note added Successfully..!'
+						})
+					})
+					.catch(err => {
+						return Observable.of({
+							type: ADD_NOTE_FAIL,
+							payload: err,
+							message: 'Note addition fail, please try again..!'
+						})
+					})
+				}
+			})
 }

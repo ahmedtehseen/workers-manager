@@ -14,6 +14,10 @@ export const DELETE_TASK_FAIL = 'DELETE_TASK_FAIL';
 
 export const SET_CURRENT_TASK = 'SET_CURRENT_TASK';
 
+export const ADD_NOTE = 'ADD_NOTE';
+export const ADD_NOTE_SUCCESS = 'ADD_NOTE_SUCCESS';
+export const ADD_NOTE_FAIL = 'ADD_NOTE_FAIL';
+
 export const userLogout = () => {
 	return {
 		type: USER_LOGOUT,
@@ -37,5 +41,12 @@ export const currentTask = (task) => {
 	return {
 		type: SET_CURRENT_TASK,
 		payload: task
+	}
+}
+
+export const addNote = (props) => {
+	return {
+		type: ADD_NOTE,
+		payload: props
 	}
 }

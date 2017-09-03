@@ -10,6 +10,7 @@ const epics = combineEpics(
 	TaskEpic.addTask,
 	DashboardEpic.getAllWorkers,
 	DashboardEpic.deleteTask,
+	DashboardEpic.addNote,
 	EditTaskEpic.uploadFile,
 	EditTaskEpic.editTask
 );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form'
 import {Dialog, TextField, RaisedButton} from 'material-ui';
 import { connect } from 'react-redux';
-import { firebaseConnect, pathToJS } from 'react-redux-firebase';
+import { firebaseConnect } from 'react-redux-firebase';
 import { addUserSuccess, addUserFail, addUser } from './AddUser.actions';
 // styles
 import './AddUser.css';
@@ -94,7 +94,7 @@ function validate(values){
 		errors.role = 'Please enter user role.'
 	}
 
-	if(values.role != 'worker' && values.role != 'admin') {
+	if(values.role !== 'worker' && values.role !== 'admin') {
 		errors.role = 'Role should be worker or admin.'
 	}
 
@@ -113,6 +113,6 @@ const mapStateToProps = (state) => {
 }
 
 export let AddUser = connect(
-	null, 
+	mapStateToProps, 
 	{addUserSuccess, addUserFail, addUser}
 )(form(wrappedAddUser));

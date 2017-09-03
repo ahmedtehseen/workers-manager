@@ -1,7 +1,7 @@
 import * as firebase from 'firebase';
 import axios from 'axios';
 import { Observable } from 'rxjs';
-import { getFirebase } from 'react-redux-firebase';
+// import { getFirebase } from 'react-redux-firebase';
 import { 
 	ADD_USER,
 	ADD_USER_SUCCESS,

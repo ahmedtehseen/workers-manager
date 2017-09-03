@@ -127,6 +127,6 @@ const mapStateToProps = (state) => {
 }
 
 export let Login = connect(
-	null,
+	mapStateToProps,
 	{loginSuccess, loginFail}
 )(form(wrappedLogin))

@@ -53,7 +53,7 @@ class EditTaskComponent extends Component {
 							{
 								this.props.workers !== null ?
 								Object.keys(this.props.workers).filter((key) => {
-									return this.props.workers[key].role == 'worker'
+									return this.props.workers[key].role === 'worker'
 								}).map((key) => (
 										<MenuItem key={key} value={this.props.workers[key]} primaryText={this.props.workers[key].name} />
 									))
@@ -83,7 +83,6 @@ class EditTaskComponent extends Component {
 				      containerElement="label"
 				      hoverColor={'#fff'}
 				      icon={<AttachFile color={'#E0E0E0'}/>}
-				      labelPosition="before"
 				      labelStyle={{ color: '#E0E0E0' }}
 				    >
 				      <input type="file" style={styles.uploadInput} ref={(file) => { this.file = file }}/>

@@ -37,7 +37,6 @@ export class TaskEpic {
 	static addTask = (action$) => 
 		action$.ofType(CREATE_TASK)
 			.switchMap(({payload}) => {
-				const { workerId } = payload;
 				return Observable.concat(
 					getFirebase().push('all-tasks', payload)
 				).switchMap((res) => {

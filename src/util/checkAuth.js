@@ -6,13 +6,13 @@ export const checkAuth = function (ComposedComponent) {
   class Authenticate extends React.Component {
     componentWillMount() {
       if (this.props.isLoggedIn) {
-        this.context.router.push('/');
+        this.context.router.push('/dashboard');
       }
     }
 
     componentWillUpdate(nextProps) {
       if (nextProps.isLoggedIn) {
-        this.context.router.push('/');
+        this.context.router.push('/dashboard');
       }
     }
 
