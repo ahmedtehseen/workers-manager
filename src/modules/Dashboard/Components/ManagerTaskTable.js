@@ -68,7 +68,7 @@ class ManagerTaskTableComponent extends Component {
 	        	(key, id) => (
 	            <TableRow key={key}>
 				        <TableRowColumn className='table-index'>{id+1}</TableRowColumn>
-				        <TableRowColumn className='table-title'><Link to={`task/${key}`}>{this.props.tasks[key].taskTitle}</Link></TableRowColumn>
+				        <TableRowColumn className='table-title'><Link to={`/${key}`}>{this.props.tasks[key].taskTitle}</Link></TableRowColumn>
 				        <TableRowColumn className='table-time'>{this.props.tasks[key].assignTo}</TableRowColumn>
 				        <TableRowColumn className='table-edit'>
 				        	<TableMenuButton 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { firebaseConnect, dataToJS, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firebaseConnect, dataToJS } from 'react-redux-firebase';
 import {
 	Card, 
 	CardText,
@@ -32,6 +32,7 @@ class DashboardLayoutComponent extends Component {
 
 	render() {
 		const { user } = this.props;
+		const tasksKeys = this.props.tasks !== undefined ? Object.keys(this.props.tasks) : null
 		return (
 			<div style={styles.taskContainer}>
 				<div style={styles.statusContainer}>
@@ -41,7 +42,13 @@ class DashboardLayoutComponent extends Component {
 								<Layers style={styles.icon} color={'#7AB15A'} hoverColor={'#77B443'}/>
 							</div>
 							<div style={styles.text}>
-								<div style={styles.heading}>38</div>
+								<div style={styles.heading}>
+									{
+										tasksKeys !== null ?
+										tasksKeys.length
+										: ''
+									}
+								</div>
 								<div>Tasks</div>
 							</div>
 						</CardText>
@@ -52,7 +59,7 @@ class DashboardLayoutComponent extends Component {
 								<Alarm style={styles.icon} color={'#7AB15A'} hoverColor={'#77B443'}/>
 							</div>
 							<div style={styles.text}>
-								<div style={styles.heading}>38</div>
+								<div style={styles.heading}>0</div>
 								<div>Late</div>
 							</div>
 						</CardText>
@@ -63,7 +70,15 @@ class DashboardLayoutComponent extends Component {
 								<CheckCircle style={styles.icon} color={'#7AB15A'} hoverColor={'#77B443'}/>
 							</div>
 							<div style={styles.text}>
-								<div style={styles.heading}>38</div>
+								<div style={styles.heading}>
+									{
+										tasksKeys !== null ?
+										tasksKeys.filter(key => {
+											return this.props.tasks[key].status === 'completed'
+										}).length
+										: ''
+									}
+								</div>
 								<div>Completed</div>
 							</div>
 						</CardText>
@@ -74,7 +89,15 @@ class DashboardLayoutComponent extends Component {
 								<ErrorOutline style={styles.icon} color={'#7AB15A'} hoverColor={'#77B443'}/>
 							</div>
 							<div style={styles.text}>
-								<div style={styles.heading}>38</div>
+								<div style={styles.heading}>
+									{
+										tasksKeys !== null ?
+										tasksKeys.filter(key => {
+											return this.props.tasks[key].status === 'pending'
+										}).length
+										: ''
+									}
+								</div>
 								<div>{ user !== null ? user.role === 'admin' ? 'Pending' : 'Ongoing' : 'Ongoing'}</div>
 							</div>
 						</CardText>
@@ -88,11 +111,14 @@ class DashboardLayoutComponent extends Component {
 	};
 };
 
-const wrappedDashboardLayout = firebaseConnect()(DashboardLayoutComponent);
+const wrappedDashboardLayout = firebaseConnect([
+	'all-tasks'
+])(DashboardLayoutComponent);
 
 const mapStateToProps = (state) => {
 	return {
-		user: state.auth.user
+		user: state.auth.user,
+		tasks: dataToJS(state.firebase, 'all-tasks'),
 	}
 }
 
