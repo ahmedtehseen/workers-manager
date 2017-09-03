@@ -11,6 +11,15 @@ import {
 	ADD_NOTE,
 	ADD_NOTE_SUCCESS, 
 	ADD_NOTE_FAIL,
+	DELETE_NOTE,
+	DELETE_NOTE_SUCCESS,
+	DELETE_NOTE_FAIL,
+	DELIVER_TASK,
+	DELIVER_TASK_SUCCESS,
+	DELIVER_TASK_FAIL,
+	REASSIGN_TASK,
+	REASSIGN_TASK_SUCCESS,
+	REASSIGN_TASK_FAIL,
 } from './Dashboard.actions';
 
 export class DashboardEpic {
@@ -92,4 +101,82 @@ export class DashboardEpic {
 					})
 				}
 			})
+
+	static deleteNote = action$ =>
+		action$.ofType(DELETE_NOTE)
+			.switchMap(({payload}) => {
+				if(payload.adminNote) {
+					return Observable.of(getFirebase().remove(`all-tasks/${payload.taskKey}/adminNotes/${payload.noteKey}`))
+					.switchMap(res => {
+						return Observable.of({
+							type: DELETE_NOTE_SUCCESS,
+							payload: res,
+							message: 'Note deleted..!'
+						})
+					})
+					.catch(err => {
+						return Observable.of({
+							type: ADD_NOTE_FAIL,
+							payload: err,
+							message: 'Note deletion fail, Please try again..!'
+						})
+					})
+				} else {
+					return Observable.of(getFirebase().remove(`all-tasks/${payload.taskKey}/workerNotes/${payload.noteKey}`))
+					.switchMap(res => {
+						return Observable.of({
+							type: DELETE_NOTE_SUCCESS,
+							payload: res,
+							message: 'Note deleted..!'
+						})
+					})
+					.catch(err => {
+						return Observable.of({
+							type: ADD_NOTE_FAIL,
+							payload: err,
+							message: 'Note deletion fail, Please try again..!'
+						})
+					})
+				}
+			})
+
+		static deliverTask = action$ =>
+			action$.ofType(DELIVER_TASK)
+				.switchMap(({payload}) => {
+					return Observable.of(getFirebase().update(`all-tasks/${payload}`, {status: 'completed'}))
+						.switchMap(res => {
+							return Observable.of({
+								type: DELETE_TASK_SUCCESS,
+								payload: res,
+								message: 'Task delivered Successfully..!'
+							})
+						})
+						.catch(err => {
+							return Observable.of({
+								type: DELIVER_TASK_FAIL,
+								payload: err,
+								message: 'Something went wrong, Please deliver again..!'
+							})
+						})
+				})
+
+		static reAssignTask = action$ =>
+			action$.ofType(REASSIGN_TASK)
+				.switchMap(({payload}) => {
+					return Observable.of(getFirebase().update(`all-tasks/${payload}`, {status: 'pending'}))
+						.switchMap(res => {
+							return Observable.of({
+								type: REASSIGN_TASK_SUCCESS,
+								payload: res,
+								message: 'Task Re-Assigned Successfully..!'
+							})
+						})
+						.catch(err => {
+							return Observable.of({
+								type: REASSIGN_TASK_FAIL,
+								payload: err,
+								message: 'Something went wrong, Please Assign again..!'
+							})
+						})
+				})
 }

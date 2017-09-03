@@ -16,7 +16,6 @@ import Layers from 'material-ui/svg-icons/maps/layers';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 // styles
 import styles from '../Dashboard.styles';
-import '../Dashboard.css'
 
 class DashboardLayoutComponent extends Component {
 

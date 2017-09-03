@@ -12,8 +12,6 @@ import { SelectField, TextField, DatePicker } from 'redux-form-material-ui';
 import AttachFile from 'material-ui/svg-icons/editor/attach-file';
 import { addNote } from '../Dashboard.actions';
 
-// import './AddTask.css'
-
 const themeColor = '#7AB15A';
 
 class AddNoteComponent extends Component {

@@ -18,8 +18,7 @@ import Layers from 'material-ui/svg-icons/maps/layers';
 import { EditTask } from '../../EditTask';
 import { TableMenuButton } from './TableMenuButton';
 // actions 
-import { deleteTask, currentTask } from '../Dashboard.actions';
-import '../Dashboard.css'
+import { deleteTask, currentTask, reAssignTask } from '../Dashboard.actions';
 
 class ManagerTaskTableComponent extends Component {
 
@@ -33,7 +32,11 @@ class ManagerTaskTableComponent extends Component {
   }
 
   deleteTask(key) {
-  	this.props.deleteTask(key)
+  	this.props.deleteTask(key);
+  }
+
+  reAssignTask(key) {
+  	this.props.reAssignTask(key);
   }
 
   toggleEditDailog(currentTask, taskKey) {
@@ -71,6 +74,7 @@ class ManagerTaskTableComponent extends Component {
 				        	<TableMenuButton 
 				        		task={this.props.tasks[key]} 
 				        		deleteTask={() => this.deleteTask(key)}
+				        		reAssignTask={() => this.reAssignTask(key)}
 				        		toggleEditDailog={() => this.toggleEditDailog(this.props.tasks[key], key)}
 				        	/>
 				        </TableRowColumn>
@@ -120,5 +124,5 @@ const mapStateToProps = (state) => {
 
 export let ManagerTaskTable = connect(
 	mapStateToProps,
-	{deleteTask, currentTask}
+	{deleteTask, currentTask, reAssignTask}
 )(wrappedManagerTaskTable);

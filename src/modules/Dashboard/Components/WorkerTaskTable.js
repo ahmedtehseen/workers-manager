@@ -21,7 +21,6 @@ import Layers from 'material-ui/svg-icons/maps/layers';
 import countdown from 'moment-countdown';
 // actions 
 import { deleteTask } from '../Dashboard.actions';
-import '../Dashboard.css'
 
 class WorkerTaskTableComponent extends Component {
 

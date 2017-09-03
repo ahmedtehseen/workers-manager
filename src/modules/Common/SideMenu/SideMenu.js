@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { Drawer, AppBar, IconButton, MenuItem } from 'material-ui';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 // styles
@@ -14,22 +15,22 @@ class SideMenuComponent extends Component {
         	iconElementRight={<IconButton><Menu style={{}} color={'#fff'} hoverColor={'#E0E0E0'}/></IconButton>}
         	style={styles.navbar}
         />
-        <MenuItem 
-          onClick={() => {}} 
+        <MenuItem
+          className='sidemenu-menuitem'
           style={{ 
             color: '#fff', 
             fontSize: '14px', 
             marginTop: '2em' 
           }}>
-          {userRole !== null && userRole === 'admin' ? 'Manager Dashboard' : 'Worker Dashboard'}
+          <Link to='dashboard'>{userRole !== null && userRole === 'admin' ? 'Manager Dashboard' : 'Worker Dashboard'}</Link>
         </MenuItem>
         <MenuItem 
-          onClick={() => {}} 
+          className='sidemenu-menuitem'
           style={{ 
             color: '#fff', 
             fontSize: '14px' 
           }}>
-          Total Tasks
+          <Link to='#'>Total Tasks</Link>
         </MenuItem>
         {
           userRole !== null && userRole === 'admin' ?
@@ -44,30 +45,30 @@ class SideMenuComponent extends Component {
           : ''
         }
         <MenuItem 
-          onClick={() => {}} 
+          className='sidemenu-menuitem' 
           style={{ 
             color: '#fff', 
             fontSize: '14px' 
           }}>
-          Completed Tasks
+          <Link to='#'>Completed Tasks</Link>
         </MenuItem>
         {
           userRole !== null && userRole === 'admin' ?
           <MenuItem 
-            onClick={() => {}} 
+            className='sidemenu-menuitem'
             style={{ 
               color: '#fff', 
               fontSize: '14px' 
             }}>
-            Workers
+            <Link to='#'>Workers</Link>
           </MenuItem> :
           <MenuItem 
-            onClick={() => {}} 
+            className='sidemenu-menuitem'
             style={{ 
               color: '#fff', 
               fontSize: '14px' 
             }}>
-            Contact Manager
+            <Link to='#'>Contact Manager</Link>
           </MenuItem> 
         }
         {

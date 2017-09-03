@@ -10,9 +10,11 @@ import AttachFile from 'material-ui/svg-icons/editor/attach-file';
 import Note from 'material-ui/svg-icons/av/note';
 import Delete from 'material-ui/svg-icons/action/delete';
 import { AddNotes } from './AddNotes';
+import { DeliverTask } from './DeliverTask';
+// actions
+import { deleteNote } from '../Dashboard.actions';
 // styles
 import styles from '../Dashboard.styles';
-import '../Dashboard.css'
 
 const themeColor = '#7AB15A';
 
@@ -20,12 +22,21 @@ class TaskComponent extends Component {
 	constructor(props) {
     super(props);
     this.state = {
-    	isOpen: false
+    	isOpen: false,
+    	isDeliverDialogOpen: false
     };
+  }
+
+  handleDeleteNote(taskKey, noteKey, adminNote) {
+  	this.props.deleteNote({taskKey, noteKey, adminNote})
   }
 
   handleDialogToggle() {
     this.setState({isOpen: !this.state.isOpen});
+  }
+
+  handleDeliverDialogToggle() {
+  	this.setState({ isDeliverDialogOpen: !this.state.isDeliverDialogOpen });
   }
 
 	render() {
@@ -85,9 +96,13 @@ class TaskComponent extends Component {
 																<Note color={themeColor}/>&nbsp;
 																{tasks[key].adminNotes[noteKey].note}
 																&nbsp;&nbsp;
-																<IconButton tooltip="Delete">
-														      <Delete color={themeColor}/>
-														    </IconButton>
+																{
+																	this.props.user.role === 'admin' ?
+																		<IconButton tooltip="Delete" onClick={() => this.handleDeleteNote(key, noteKey, true)}>
+																      <Delete color={themeColor}/>
+																    </IconButton>
+																  : '' 
+																}
 															</p>
 														)
 													})
@@ -107,7 +122,7 @@ class TaskComponent extends Component {
 																{tasks[key].workerNotes[noteKey].note}
 																&nbsp;&nbsp;
 																<IconButton tooltip="Delete">
-														      <Delete color={themeColor}/>
+														      <Delete color={themeColor} onClick={() => this.handleDeleteNote(key, noteKey, false)}/>
 														    </IconButton>
 															</p>
 														)
@@ -135,7 +150,7 @@ class TaskComponent extends Component {
 									      labelColor='#fff'
 									      labelStyle={{ fontSize: '12px' }}
 									      className=''
-									      onClick={() => this.handleDialogToggle()}
+									      onClick={() => this.handleDeliverDialogToggle()}
 									    /> 
 								    </div>
 								  : ''
@@ -145,6 +160,12 @@ class TaskComponent extends Component {
 					}
 				</div>
 				<AddNotes isOpen={this.state.isOpen} handleDialogToggle={() => this.handleDialogToggle()} taskKey={key}/>
+				<DeliverTask 
+					isOpen={this.state.isDeliverDialogOpen} 
+					handleDialogToggle={() => this.handleDeliverDialogToggle()} 
+					task={tasks && key !== null ?  tasks[key] : null}
+					taskKey= {key}
+				/>
 			</div>	
 		);
 	};
@@ -163,5 +184,5 @@ const mapStateToProps = (state) => {
 
 export let Task = connect(
 	mapStateToProps,
-	{}
+	{deleteNote}
 )(wrappedTask);

@@ -9,7 +9,6 @@ import { ManagerTaskTable } from './ManagerTaskTable';
 import { WorkerTaskTable } from './WorkerTaskTable';
 // styles
 import styles from '../Dashboard.styles';
-import '../Dashboard.css'
 
 class TaskTableComponent extends Component {
 

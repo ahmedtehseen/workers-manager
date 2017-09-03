@@ -18,6 +18,10 @@ import {
 import {
 	DELETE_TASK_SUCCESS,
 	DELETE_TASK_FAIL,
+	DELIVER_TASK_SUCCESS,
+	DELIVER_TASK_FAIL,
+	REASSIGN_TASK_SUCCESS,
+	REASSIGN_TASK_FAIL,
 } from '../Dashboard';
 
 
@@ -38,6 +42,10 @@ export const AppReducer = (state = initialState, action) => {
 		case FILE_UPLOAD_FAIL:
 		case DELETE_TASK_SUCCESS:
 		case DELETE_TASK_FAIL:
+		case DELIVER_TASK_SUCCESS:
+		case DELIVER_TASK_FAIL:
+		case REASSIGN_TASK_SUCCESS:
+		case REASSIGN_TASK_FAIL:
 			return Object.assign({}, state, {
 				response: true,
 				message: action.message

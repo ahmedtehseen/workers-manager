@@ -6,6 +6,8 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { Navbar, SideMenu, Footer } from '../Common';
 import { DashboardLayout } from './Components/DashboardLayout';
 import { userLogout, getAllWorkers } from './Dashboard.actions';
+// styles
+import './Dashboard.css';
 
 export class DashboardContainer extends Component {	
   componentDidMount(){

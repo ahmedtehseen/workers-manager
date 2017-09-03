@@ -18,6 +18,18 @@ export const ADD_NOTE = 'ADD_NOTE';
 export const ADD_NOTE_SUCCESS = 'ADD_NOTE_SUCCESS';
 export const ADD_NOTE_FAIL = 'ADD_NOTE_FAIL';
 
+export const DELETE_NOTE = 'DELETE_NOTE';
+export const DELETE_NOTE_SUCCESS = 'DELETE_NOTE_SUCCESS';
+export const DELETE_NOTE_FAIL = 'DELETE_NOTE_FAIL';
+
+export const DELIVER_TASK = 'DELIVER_TASK';
+export const DELIVER_TASK_SUCCESS = 'DELIVER_TASK_SUCCESS';
+export const DELIVER_TASK_FAIL = 'DELIVER_TASK_FAIL';
+
+export const REASSIGN_TASK = 'REASSIGN_TASK';
+export const REASSIGN_TASK_SUCCESS = 'REASSIGN_TASK_SUCCESS';
+export const REASSIGN_TASK_FAIL = 'REASSIGN_TASK_FAIL';
+
 export const userLogout = () => {
 	return {
 		type: USER_LOGOUT,
@@ -30,23 +42,44 @@ export const getAllWorkers = () => {
 	}
 } 
 
-export const deleteTask = (key) => {
+export const deleteTask = (props) => {
 	return {
 		type: DELETE_TASK,
-		payload: key
+		payload: props
 	}
 }
 
-export const currentTask = (task) => {
+export const currentTask = (props) => {
 	return {
 		type: SET_CURRENT_TASK,
-		payload: task
+		payload: props
 	}
 }
 
 export const addNote = (props) => {
 	return {
 		type: ADD_NOTE,
+		payload: props
+	}
+}
+
+export const deleteNote = (props) => {
+	return {
+		type: DELETE_NOTE,
+		payload: props
+	}
+}
+
+export const deliverTask = (props) => {
+	return {
+		type: DELIVER_TASK,
+		payload: props
+	}
+}
+
+export const reAssignTask = (props) => {
+	return {
+		type: REASSIGN_TASK,
 		payload: props
 	}
 }

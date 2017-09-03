@@ -12,7 +12,7 @@ const TableMenuButton = (props) => {
       iconButtonElement={<IconButton className='menu-icon'><MoreVertIcon color={'#7AB15A'} /></IconButton>}
     >
       <MenuItem primaryText="Edit Task" onClick={props.toggleEditDailog}/>
-      <MenuItem primaryText="Re-Assign" />
+      <MenuItem primaryText="Re-Assign" onClick={props.reAssignTask}/>
       <MenuItem primaryText="Send message to worker" />
       <MenuItem primaryText="Delete Task" onClick={props.deleteTask}/>
     </IconMenu>
