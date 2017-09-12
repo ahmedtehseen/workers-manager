@@ -20,7 +20,7 @@ class ChatListComponent extends Component {
 	      			Object.keys(this.props.workers).filter(key => (
 								this.props.workers[key].role === 'worker'
 	      			)).map(key => (
-	      				<Link to={`/chat/${key}`} key={key}>
+	      				<Link to={`/chat/${key}`} key={key} className='link-mode'>
 		      				<ListItem
 		      					key={key}
 						        primaryText={this.props.workers[key].name}
@@ -31,7 +31,7 @@ class ChatListComponent extends Component {
 	      		: Object.keys(this.props.workers).filter(key => (
 								this.props.workers[key].role === 'admin'
 	      			)).map(key => (
-	      				<Link to={`/chat/${key}`} key={key}>
+	      				<Link to={`/chat/${key}`} key={key} className='link-mode'>
 		      				<ListItem
 		      					key={key}
 						        primaryText={this.props.workers[key].name}

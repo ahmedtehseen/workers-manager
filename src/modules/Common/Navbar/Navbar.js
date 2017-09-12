@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { AppBar, IconButton, DropDownMenu, MenuItem, Avatar } from 'material-ui';
-import CommunicationMessage from 'material-ui/svg-icons/communication/email';
+// import CommunicationMessage from 'material-ui/svg-icons/communication/email';
 import Notification from 'material-ui/svg-icons/social/notifications';
 import Forum from 'material-ui/svg-icons/communication/forum';
 import PersonAdd from 'material-ui/svg-icons/social/person-add';
@@ -26,9 +26,6 @@ const IconLeft = (props) => {
 	    	<Link to='/chat'>
 	      	<Forum style={{}} color={'#E0E0E0'} hoverColor={'#BDBDBD'}/>
 	      </Link>
-	    </IconButton>
-			<IconButton>
-	      <CommunicationMessage style={{}} color={'#E0E0E0'} hoverColor={'#BDBDBD'}/>
 	    </IconButton>
 	    <IconButton>
 	      <Notification style={{}} color={'#E0E0E0'} hoverColor={'#BDBDBD'}/>

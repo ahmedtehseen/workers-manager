@@ -2,10 +2,23 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { Drawer, AppBar, IconButton, MenuItem } from 'material-ui';
 import Menu from 'material-ui/svg-icons/navigation/menu';
+import { AddTask } from '../../AddTask';
 // styles
 import styles from './SideMenu.styles';
 
 class SideMenuComponent extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      openDialog: false
+    };
+  }
+
+  handleDialogToggle() {
+    this.setState({openDialog: !this.state.openDialog});
+  }
+
 	render() {
     const {userRole} = this.props;
 		return (
@@ -35,7 +48,7 @@ class SideMenuComponent extends Component {
         {
           userRole !== null && userRole === 'admin' ?
           <MenuItem 
-            onClick={() => {}} 
+            onClick={() => this.handleDialogToggle()}
             style={{ 
               color: '#fff', 
               fontSize: '14px' 
@@ -83,6 +96,7 @@ class SideMenuComponent extends Component {
           </MenuItem>
           : ''
         }
+        <AddTask openDialog={this.state.openDialog} handleDialogToggle={() => this.handleDialogToggle()}/>
       </Drawer>
 		)
 	}

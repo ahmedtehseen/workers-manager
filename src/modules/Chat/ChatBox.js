@@ -25,7 +25,7 @@ class ChatComponent extends Component {
 	}
 
 	componentDidMount() {
-	  this.props.getActiveConversion(this.props.params.key, this.props.user.uid);
+	  this.props.getActiveConversion(this.props.params.key, this.props.user ? this.props.user.uid : '');
 	}
 
 	componentDidUpdate() {
@@ -79,7 +79,7 @@ class ChatComponent extends Component {
 			<div className='chatbox-container'>
 				<div>
 					<Subheader>
-						Chat
+						{this.props.users ? this.props.users[key].name : 'Chat'}
 					</Subheader>
 					<Divider/>
 				</div>
@@ -100,7 +100,7 @@ class ChatComponent extends Component {
 				      className='message-input'
 				    />
 				    <RaisedButton
-				    	label='Send Message'
+				    	label='Send'
 				    	type='submit'
 				    	style={{boxShadow:'none', marginTop:'5px'}}
 				    	labelColor='#fff'
@@ -118,7 +118,8 @@ const wrappedChatComponent = firebaseConnect()(ChatComponent);
 const mapStateToProps = (state) => {
 	return {
 		user: state.auth.user,
-		activeConversation: state.chat.activeConversation
+		activeConversation: state.chat.activeConversation,
+		users: state.dashboard.workers
 	}
 }
 

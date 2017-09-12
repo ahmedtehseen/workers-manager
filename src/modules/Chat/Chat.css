@@ -56,3 +56,7 @@
 .message-input {
 	padding: 0 1em;
 }
+
+.link-mode {
+	text-decoration: none;
+}

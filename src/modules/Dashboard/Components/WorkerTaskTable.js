@@ -41,7 +41,7 @@ class WorkerTaskTableComponent extends Component {
 				        <TableRowColumn className='table-index'>{id+1}</TableRowColumn>
 				        <TableRowColumn className='table-title'><Link to={`/task/${key}`}>{this.props.tasks[key].taskTitle}</Link></TableRowColumn>
 				        <TableRowColumn className='table-time'>
-				        	{moment(this.props.tasks[key].completionDate).countdown().toString()}
+				        	{this.props.tasks[key].status === 'pending' ? moment(this.props.tasks[key].completionDate).countdown().toString() : this.props.tasks[key].status}
 				        </TableRowColumn>
 				        <TableRowColumn className='table-select'>
 				        	<Checkbox className='table-checkbox' checked={true} iconStyle={{ fill: '#7AB15A' }}/>

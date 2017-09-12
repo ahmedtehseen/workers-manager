@@ -13,17 +13,6 @@ import styles from '../Dashboard.styles';
 
 class DashboardLayoutComponent extends Component {
 
-	constructor(props) {
-    super(props);
-    this.state = {
-    	openDialog: false
-    };
-  }
-
-  handleDialogToggle() {
-    this.setState({openDialog: !this.state.openDialog});
-  }
-
 	render() {
 		const { user } = this.props;
 		const tasksKeys = this.props.tasks !== undefined ? this.props.tasks !== null ? Object.keys(this.props.tasks) : null : null;
