@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { firebaseConnect, pathToJS } from 'react-redux-firebase';
+import { firebaseConnect } from 'react-redux-firebase';
 import moment from 'moment';
 import { reduxForm, Field } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
@@ -8,7 +8,6 @@ import {
 	Dialog, 
 	FlatButton,
 	RaisedButton,
-	MenuItem
 } from 'material-ui';
 import AttachFile from 'material-ui/svg-icons/editor/attach-file';
 import CheckCircle from 'material-ui/svg-icons/action/check-circle';
@@ -120,7 +119,7 @@ const form = reduxForm({
 
 const mapStateToProps = (state) => {
 	return {
-		user: pathToJS(state.firebase, 'auth'),
+		user: state.firebase.auth,
 	}
 }
 

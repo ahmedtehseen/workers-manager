@@ -7,7 +7,7 @@ import {
 	MenuItem
 } from 'material-ui';
 import { connect } from 'react-redux';
-import { firebaseConnect, pathToJS } from 'react-redux-firebase';
+import { firebaseConnect } from 'react-redux-firebase';
 import { SelectField, TextField, DatePicker } from 'redux-form-material-ui';
 import AttachFile from 'material-ui/svg-icons/editor/attach-file';
 import { addTask, createTask } from './AddTask.actions';
@@ -143,7 +143,7 @@ const form = reduxForm({
 
 const mapStateToProps = (state) => {
 	return {
-		user: pathToJS(state.firebase, 'auth'),
+		user: state.firebase.auth,
 		workers: state.dashboard.workers
 	}
 }

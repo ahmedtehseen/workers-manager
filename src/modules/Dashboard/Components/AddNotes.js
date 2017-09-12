@@ -2,14 +2,12 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form'
 import {
 	Dialog, 
-	FlatButton,
 	RaisedButton,
-	MenuItem
 } from 'material-ui';
 import { connect } from 'react-redux';
-import { firebaseConnect, pathToJS } from 'react-redux-firebase';
-import { SelectField, TextField, DatePicker } from 'redux-form-material-ui';
-import AttachFile from 'material-ui/svg-icons/editor/attach-file';
+import { firebaseConnect } from 'react-redux-firebase';
+import { TextField } from 'redux-form-material-ui';
+// import AttachFile from 'material-ui/svg-icons/editor/attach-file';
 import { addNote } from '../Dashboard.actions';
 
 const themeColor = '#7AB15A';
@@ -95,22 +93,3 @@ export let AddNotes = connect(
 	{addNote}
 )(form(wrappedAddNote));
 
-
-const styles = {
-  uploadButton: {
-    verticalAlign: 'middle',
-    width: '16em',
-    marginTop: '5px',
-    borderBottom: '1px solid rgb(224, 224, 224)'
-  },
-  uploadInput: {
-    cursor: 'pointer',
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 0,
-    width: '100%',
-    opacity: 0,
-  },
-};

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { firebaseConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { 
 	List,
 	ListItem,
@@ -19,18 +20,24 @@ class ChatListComponent extends Component {
 	      			Object.keys(this.props.workers).filter(key => (
 								this.props.workers[key].role === 'worker'
 	      			)).map(key => (
-	      				<ListItem
-					        primaryText={this.props.workers[key].name}
-					        leftAvatar={<Avatar src="images/ok-128.jpg" />}
-					      />
+	      				<Link to={`/chat/${key}`} key={key}>
+		      				<ListItem
+		      					key={key}
+						        primaryText={this.props.workers[key].name}
+						        leftAvatar={<Avatar src={process.env.PUBLIC_URL + '/avatar.png'} />}
+						      />
+					      </Link>
 	      			)) 
 	      		: Object.keys(this.props.workers).filter(key => (
 								this.props.workers[key].role === 'admin'
 	      			)).map(key => (
-	      				<ListItem
-					        primaryText={this.props.workers[key].name}
-					        leftAvatar={<Avatar src={process.env.PUBLIC_URL + '/avatar.png'} />}
-					      />
+	      				<Link to={`/chat/${key}`} key={key}>
+		      				<ListItem
+		      					key={key}
+						        primaryText={this.props.workers[key].name}
+						        leftAvatar={<Avatar src={process.env.PUBLIC_URL + '/avatar.png'} />}
+						      />
+					      </Link>
 	      			))
 	      	: ''
 	      }

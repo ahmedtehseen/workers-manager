@@ -1,6 +1,6 @@
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
-import { LoginEpic, AppEpic, AddUserEpic, TaskEpic, DashboardEpic, EditTaskEpic } from './modules';
+import { LoginEpic, AppEpic, AddUserEpic, TaskEpic, DashboardEpic, EditTaskEpic, ChatEpic } from './modules';
 
 const epics = combineEpics(
 	AppEpic.hideSnackbar,
@@ -9,14 +9,15 @@ const epics = combineEpics(
 	TaskEpic.uploadFile,
 	TaskEpic.addTask,
 	DashboardEpic.getAllWorkers,
-	// DashboardEpic.getAllManagers,
 	DashboardEpic.deleteTask,
 	DashboardEpic.addNote,
 	DashboardEpic.deleteNote,
 	DashboardEpic.deliverTask,
 	DashboardEpic.reAssignTask,
 	EditTaskEpic.uploadFile,
-	EditTaskEpic.editTask
+	EditTaskEpic.editTask,
+	ChatEpic.sendMessage,
+	ChatEpic.getActiveConversation
 );
 
 export const epicMiddleware = createEpicMiddleware(epics);

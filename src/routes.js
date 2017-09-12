@@ -9,7 +9,8 @@ import {
 	TaskTable,
 	Task,
 	Chat,
-	ChatList
+	ChatList,
+	ChatBox
 } from './modules';
 
 
@@ -18,7 +19,11 @@ export default (
 		<IndexRoute component={checkAuth(Login)} />
 		<Route path="/dashboard" component={requireAuth(Dashboard)}>
 			<IndexRoute component={TaskTable} />
-			<Route path="/:key" component={Task} />
+			<Route path="/task/:key" component={Task} />
+			<Route path="/chat" component={Chat}>
+				<IndexRoute component={ChatList}/>
+				<Route path="/chat/:key" component={ChatBox}/>
+			</Route>
 		</Route>
 	</Route>
 );

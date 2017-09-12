@@ -10,4 +10,4 @@ export { TaskEpic } from './AddTask';
 
 export { EditTaskEpic } from './EditTask';
 
-export { Chat, ChatList } from './Chat';
+export { Chat, ChatList, ChatBox, ChatEpic, ChatReducer } from './Chat';

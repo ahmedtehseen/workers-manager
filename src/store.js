@@ -39,6 +39,6 @@ firebase.initializeApp(config)
 
 
 export const store = createStore(rootReducer, rootInitialState, composeEnhancers(
-	reactReduxFirebase(config, { userProfile: 'users' }),
+	reactReduxFirebase(firebase, { userProfile: 'users' }),
   applyMiddleware(logger, epicMiddleware, routingMiddleware)
 ));

@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { firebaseConnect, dataToJS, isLoaded, isEmpty } from 'react-redux-firebase';
-import { store } from '../../../store';
+import { firebaseConnect, populate, isLoaded, isEmpty } from 'react-redux-firebase';
 import moment from 'moment';
 import {
-	Card, 
-	CardText,
 	Table,
   TableBody,
   TableHeader,
@@ -16,10 +13,8 @@ import {
   Checkbox
 } from 'material-ui';
 import Alarm from 'material-ui/svg-icons/action/alarm';
-import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import Layers from 'material-ui/svg-icons/maps/layers';
 import countdown from 'moment-countdown';
-// actions 
 import { deleteTask } from '../Dashboard.actions';
 
 class WorkerTaskTableComponent extends Component {
@@ -44,7 +39,7 @@ class WorkerTaskTableComponent extends Component {
 	        	(key, id) => (
 	            <TableRow key={key}>
 				        <TableRowColumn className='table-index'>{id+1}</TableRowColumn>
-				        <TableRowColumn className='table-title'><Link to={`/${key}`}>{this.props.tasks[key].taskTitle}</Link></TableRowColumn>
+				        <TableRowColumn className='table-title'><Link to={`/task/${key}`}>{this.props.tasks[key].taskTitle}</Link></TableRowColumn>
 				        <TableRowColumn className='table-time'>
 				        	{moment(this.props.tasks[key].completionDate).countdown().toString()}
 				        </TableRowColumn>
@@ -93,7 +88,7 @@ const wrappedWorkerTaskTable = firebaseConnect(
 
 const mapStateToProps = (state) => {
 	return {
-		tasks: dataToJS(state.firebase, 'all-tasks'),
+		tasks: populate(state.firebase, 'all-tasks'),
 		user: state.auth.user
 	}
 }

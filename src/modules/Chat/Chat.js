@@ -7,7 +7,7 @@ import './Chat.css';
 class ChatComponent extends Component {
 	render() {
 		return (
-			<div className='chat-container'>
+			<div>
 				{this.props.children}
 			</div>
 		);

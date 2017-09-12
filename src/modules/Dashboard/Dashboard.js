@@ -11,13 +11,7 @@ import './Dashboard.css';
 
 export class DashboardContainer extends Component {	
   componentDidMount(){
-  	// if(this.props.user !== null) {
-  	// 	setTimeout(() => {
-  	// 		this.props.user.role === 'admin' ? 
-  			this.props.getAllWorkers() 
-  	// 		: ''
-  	// 	}, 1000)
-  	// }
+  	this.props.getAllWorkers();
   }
 	handleLogout() {
 		this.props.firebase.logout()

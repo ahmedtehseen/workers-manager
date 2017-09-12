@@ -22,7 +22,7 @@ class SideMenuComponent extends Component {
             fontSize: '14px', 
             marginTop: '2em' 
           }}>
-          <Link to='dashboard'>{userRole !== null && userRole === 'admin' ? 'Manager Dashboard' : 'Worker Dashboard'}</Link>
+          <Link to='/dashboard'>{userRole !== null && userRole === 'admin' ? 'Manager Dashboard' : 'Worker Dashboard'}</Link>
         </MenuItem>
         <MenuItem 
           className='sidemenu-menuitem'
@@ -60,7 +60,7 @@ class SideMenuComponent extends Component {
               color: '#fff', 
               fontSize: '14px' 
             }}>
-            <Link to='#'>Workers</Link>
+            <Link to='/chat'>Workers</Link>
           </MenuItem> :
           <MenuItem 
             className='sidemenu-menuitem'
@@ -68,7 +68,7 @@ class SideMenuComponent extends Component {
               color: '#fff', 
               fontSize: '14px' 
             }}>
-            <Link to='#'>Contact Manager</Link>
+            <Link to='/chat'>Contact Manager</Link>
           </MenuItem> 
         }
         {

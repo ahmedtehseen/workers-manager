@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { firebaseConnect, dataToJS } from 'react-redux-firebase';
+import { firebaseConnect, populate } from 'react-redux-firebase';
 import {
 	Card, 
 	CardText,
-  RaisedButton,
 } from 'material-ui';
-import NoteAdd from 'material-ui/svg-icons/action/note-add';
 import Alarm from 'material-ui/svg-icons/action/alarm';
 import CheckCircle from 'material-ui/svg-icons/action/check-circle';
-import Bookmark from 'material-ui/svg-icons/action/bookmark';
 import ErrorOutline from 'material-ui/svg-icons/alert/error-outline';
-import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import Layers from 'material-ui/svg-icons/maps/layers';
-import Menu from 'material-ui/svg-icons/navigation/menu';
-// styles
 import styles from '../Dashboard.styles';
 
 class DashboardLayoutComponent extends Component {
@@ -32,7 +26,7 @@ class DashboardLayoutComponent extends Component {
 
 	render() {
 		const { user } = this.props;
-		const tasksKeys = this.props.tasks !== undefined ? Object.keys(this.props.tasks) : null
+		const tasksKeys = this.props.tasks !== undefined ? this.props.tasks !== null ? Object.keys(this.props.tasks) : null : null;
 		return (
 			<div style={styles.taskContainer}>
 				<div style={styles.statusContainer}>
@@ -46,7 +40,7 @@ class DashboardLayoutComponent extends Component {
 									{
 										tasksKeys !== null ?
 										tasksKeys.length
-										: ''
+										: '0'
 									}
 								</div>
 								<div>Tasks</div>
@@ -76,7 +70,7 @@ class DashboardLayoutComponent extends Component {
 										tasksKeys.filter(key => {
 											return this.props.tasks[key].status === 'completed'
 										}).length
-										: ''
+										: '0'
 									}
 								</div>
 								<div>Completed</div>
@@ -95,7 +89,7 @@ class DashboardLayoutComponent extends Component {
 										tasksKeys.filter(key => {
 											return this.props.tasks[key].status === 'pending'
 										}).length
-										: ''
+										: '0'
 									}
 								</div>
 								<div>{ user !== null ? user.role === 'admin' ? 'Pending' : 'Ongoing' : 'Ongoing'}</div>
@@ -117,8 +111,8 @@ const wrappedDashboardLayout = firebaseConnect([
 
 const mapStateToProps = (state) => {
 	return {
+		tasks: populate(state.firebase, 'all-tasks'),
 		user: state.auth.user,
-		tasks: dataToJS(state.firebase, 'all-tasks'),
 	}
 }
 

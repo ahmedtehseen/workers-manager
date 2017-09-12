@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { firebaseConnect, dataToJS, isLoaded, isEmpty } from 'react-redux-firebase';
+import { firebaseConnect, populate, isLoaded, isEmpty } from 'react-redux-firebase';
 import {
-	Card, 
-	CardText,
 	Table,
   TableBody,
   TableHeader,
@@ -13,7 +11,7 @@ import {
   TableRowColumn,
 } from 'material-ui';
 import Bookmark from 'material-ui/svg-icons/action/bookmark';
-import PersonAdd from 'material-ui/svg-icons/social/person-add';
+// import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import Layers from 'material-ui/svg-icons/maps/layers';
 import { EditTask } from '../../EditTask';
 import { TableMenuButton } from './TableMenuButton';
@@ -68,7 +66,7 @@ class ManagerTaskTableComponent extends Component {
 	        	(key, id) => (
 	            <TableRow key={key}>
 				        <TableRowColumn className='table-index'>{id+1}</TableRowColumn>
-				        <TableRowColumn className='table-title'><Link to={`/${key}`}>{this.props.tasks[key].taskTitle}</Link></TableRowColumn>
+				        <TableRowColumn className='table-title'><Link to={`/task/${key}`}>{this.props.tasks[key].taskTitle}</Link></TableRowColumn>
 				        <TableRowColumn className='table-time'>{this.props.tasks[key].assignTo}</TableRowColumn>
 				        <TableRowColumn className='table-edit'>
 				        	<TableMenuButton 
@@ -83,7 +81,7 @@ class ManagerTaskTableComponent extends Component {
 	        )
 		return (
 			<div>
-				<Table className='task-table' >
+				<Table className='task-table'>
 			    <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
 			      <TableRow>
 			        <TableHeaderColumn className='table-index-th'></TableHeaderColumn>
@@ -113,12 +111,12 @@ class ManagerTaskTableComponent extends Component {
 };
 
 const wrappedManagerTaskTable = firebaseConnect([
-	'/all-tasks',
+	'/all-tasks#orderByChild=workerId',
 ])(ManagerTaskTableComponent);
 
 const mapStateToProps = (state) => {
 	return {
-		tasks: dataToJS(state.firebase, 'all-tasks'),
+		tasks: populate(state.firebase, 'all-tasks'),
 	}
 }
 

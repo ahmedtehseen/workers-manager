@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { firebaseConnect, dataToJS } from 'react-redux-firebase';
+import { firebaseConnect, populate } from 'react-redux-firebase';
 import moment from 'moment';
 import { RaisedButton, IconButton } from 'material-ui';
 import NoteAdd from 'material-ui/svg-icons/action/note-add';
-import Menu from 'material-ui/svg-icons/navigation/menu';
+// import Menu from 'material-ui/svg-icons/navigation/menu';
 import Alarm from 'material-ui/svg-icons/action/alarm';
 import AttachFile from 'material-ui/svg-icons/editor/attach-file';
 import Note from 'material-ui/svg-icons/av/note';
@@ -42,6 +42,7 @@ class TaskComponent extends Component {
 	render() {
 		const { user, tasks } = this.props;
 		const { key } = this.props.params;
+		console.log('Single Task:', tasks)
 		return (
 			<div>
 				<div style={styles.taskHeader}>
@@ -171,13 +172,17 @@ class TaskComponent extends Component {
 	};
 };
 
-const wrappedTask = firebaseConnect([
-	'/all-tasks',
-])(TaskComponent);
+const wrappedTask = firebaseConnect(
+	({user}) => {
+		return ([
+			`/all-tasks#orderByChild=workerId${user !== null ? user.role !== 'admin' ? '&equalTo='+user.uid : '' : ''}`
+		])
+	}
+)(TaskComponent);
 
 const mapStateToProps = (state) => {
 	return {
-		tasks: dataToJS(state.firebase, 'all-tasks'),
+		tasks: populate(state.firebase, 'all-tasks'),
 		user: state.auth.user
 	}
 }
