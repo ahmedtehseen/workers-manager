@@ -1,0 +1,26 @@
+.report-container{
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+  min-height: 50vh;
+}
+
+
+/*.report-tab{
+}*/
+
+.report-tab {
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+/*
+.report-tab:nth-child(2) {
+	padding: 5px 5px 0 5px;
+	flex-grow: 3;
+	flex-shrink: 3;
+}
+
+.report-tab:nth-child(3) {
+	flex-grow: 2;
+	flex-shrink: 2;
+}*/

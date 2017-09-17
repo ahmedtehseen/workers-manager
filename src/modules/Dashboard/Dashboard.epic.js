@@ -42,26 +42,6 @@ export class DashboardEpic {
 				})
 			})
 
-	// static getAllManagers = action$ =>
-	// 	action$.ofType(GET_MANAGERS)
-	// 		.switchMap(() => {
-	// 			return new Observable(observer => {
-	// 				getFirebase().ref('users').on('value', snap => {
-	// 					const snapObj = snap.val();
-	// 					const managerKeysArr = Object.keys(snapObj).filter(key => {
-	// 						return snapObj[key].role === 'admin'
-	// 					})
-	// 					const managersArr = managerKeysArr.map(key => (snapObj[key]))
-	// 					observer.next({ type: GET_MANAGERS_SUCCESS, payload: managersArr })
-	// 				})
-	// 			}).catch((err) => {
-	// 				return Observable.of({
-	// 					type: GET_MANAGERS_FAIL,
-	// 					payload: err,
-	// 				})
-	// 			})
-	// 		})
-
 	static deleteTask = action$ => 
 		action$.ofType(DELETE_TASK)
 			.switchMap(({payload}) => {

@@ -17,7 +17,7 @@ import { TableMenuButton } from './TableMenuButton';
 // actions 
 import { deleteTask, currentTask, reAssignTask } from '../Dashboard.actions';
 
-class ManagerTaskTableComponent extends Component {
+class TotalTasksComponent extends Component {
 
 	constructor(props) {
     super(props);
@@ -64,9 +64,7 @@ class ManagerTaskTableComponent extends Component {
 	    ? <TableRow><TableRowColumn>Loading...</TableRowColumn></TableRow>
 	    : isEmpty(this.props.tasks)
 	      ? <TableRow><TableRowColumn>No Task Assigned yet.</TableRowColumn></TableRow>
-	      : Object.keys(this.props.tasks).filter(key => (
-	      		this.props.tasks[key].status === 'pending'
-	      	)).map(
+	      : Object.keys(this.props.tasks).map(
 	        	(key, id) => (
 	            <TableRow key={key}>
 				        <TableRowColumn className='table-index'>{id+1}</TableRowColumn>
@@ -114,17 +112,20 @@ class ManagerTaskTableComponent extends Component {
 	};
 };
 
-const wrappedManagerTaskTable = firebaseConnect([
-	'/all-tasks#orderByChild=workerId',
-])(ManagerTaskTableComponent);
+const wrappedTotalTasks = firebaseConnect(({user}) => {
+		return ([
+			`/all-tasks#orderByChild=workerId${user !== null ? user.role !== 'admin' ? '&equalTo='+user.uid : '' : ''}`
+		])
+	})(TotalTasksComponent);
 
 const mapStateToProps = (state) => {
 	return {
 		tasks: populate(state.firebase, 'all-tasks'),
+		user: state.auth.user
 	}
 }
 
-export let ManagerTaskTable = connect(
+export let TotalTasks = connect(
 	mapStateToProps,
 	{deleteTask, currentTask, reAssignTask}
-)(wrappedManagerTaskTable);
+)(wrappedTotalTasks);

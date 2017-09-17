@@ -86,6 +86,10 @@ function validate(values){
 		errors.password = 'Password is required.'
 	}
 
+	if(values.password ? values.password.length < 6 : '') {
+		errors.password = 'Please use at least 6 characters.'
+	}
+
 	if(!values.name){
 		errors.name = 'Please enter user name.'
 	}

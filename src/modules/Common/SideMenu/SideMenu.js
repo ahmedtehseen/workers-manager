@@ -43,7 +43,7 @@ class SideMenuComponent extends Component {
             color: '#fff', 
             fontSize: '14px' 
           }}>
-          <Link to='#'>Total Tasks</Link>
+          <Link to='/total-tasks'>Total Tasks</Link>
         </MenuItem>
         {
           userRole !== null && userRole === 'admin' ?
@@ -63,7 +63,7 @@ class SideMenuComponent extends Component {
             color: '#fff', 
             fontSize: '14px' 
           }}>
-          <Link to='#'>Completed Tasks</Link>
+          <Link to='/completed-tasks'>Completed Tasks</Link>
         </MenuItem>
         {
           userRole !== null && userRole === 'admin' ?
@@ -94,6 +94,18 @@ class SideMenuComponent extends Component {
             }}>
             Help
           </MenuItem>
+          : ''
+        }
+        {
+          userRole !== null && userRole === 'admin' ?
+          <MenuItem 
+            className='sidemenu-menuitem'
+            style={{ 
+              color: '#fff', 
+              fontSize: '14px' 
+            }}>
+            <Link to='/reports'>Reports</Link>
+          </MenuItem> 
           : ''
         }
         <AddTask openDialog={this.state.openDialog} handleDialogToggle={() => this.handleDialogToggle()}/>

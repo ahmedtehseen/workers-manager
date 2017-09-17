@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { firebaseConnect } from 'react-redux-firebase';
+import { firebaseConnect, populate } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 // styles
 import './Chat.css';
@@ -14,12 +14,13 @@ class ChatComponent extends Component {
 	};
 };
 
-const wrappedChat = firebaseConnect()(ChatComponent);
+const wrappedChat = firebaseConnect([
+	'all-tasks'
+])(ChatComponent);
 
 const mapStateToProps = (state) => {
 	return {
-		user: state.auth.user,
-		workers: state.dashboard.workers,
+		tasks: populate(state.firebase, 'all-tasks'),
 	}
 }
 

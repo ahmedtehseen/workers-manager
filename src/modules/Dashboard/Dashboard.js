@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
+import { firebaseConnect, populate } from 'react-redux-firebase';
 
 import { Navbar, SideMenu, Footer } from '../Common';
 import { DashboardLayout } from './Components/DashboardLayout';
@@ -32,10 +32,13 @@ export class DashboardContainer extends Component {
 	}
 }
 
-const wrappedDashboard = firebaseConnect()(DashboardContainer)
+const wrappedDashboard = firebaseConnect([
+	'all-tasks'
+])(DashboardContainer)
 
 const mapStateToProps = (state) => {
 	return {
+		tasks: populate(state.firebase, 'all-tasks'),
 		user: state.auth.user
 	}
 }

@@ -30,7 +30,7 @@ class EditTaskComponent extends Component {
 			this.props.editTask(objWithoutFile)
 		}
 		this.props.reset();
-		this.props.toggleEditDailog();
+		this.props.closeDialog();
 		this.file = null;
   }
 
@@ -41,7 +41,7 @@ class EditTaskComponent extends Component {
 	      title="Edit Task"
 	      modal={false}
 	      open={this.props.openEditDialog}
-	      onRequestClose={this.props.toggleEditDailog}
+	      onRequestClose={this.props.closeDialog}
 	      contentStyle={{ display: 'flex', justifyContent: 'center'}}
 	      className='task-modal'
 	    >
@@ -122,6 +122,7 @@ function validate(values){
 	if(!values.worker){
 		errors.worker = 'Please select a Worker.'
 	}
+	
 	if(!values.details){
 		errors.details = 'Please provide some details.'
 	}

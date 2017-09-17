@@ -19,10 +19,17 @@ export class AddUserEpic {
 			const userObj = {email, password, name, role, timestamp}
 			return Observable.fromPromise(axios.post(authenticateUser, userObj))
 				.switchMap((res) => {
+					if (res.data.success) {
+						return Observable.of({
+							type: ADD_USER_SUCCESS,
+							payload: res,
+							message: 'User added successfully..!'
+						})
+					}
 					return Observable.of({
-						type: ADD_USER_SUCCESS,
+						type: ADD_USER_FAIL,
 						payload: res,
-						message: 'User added successfully..!'
+						message: 'Something went wrong, Please try again..!'
 					})
 				}).catch((err) => {
 					return Observable.of({
