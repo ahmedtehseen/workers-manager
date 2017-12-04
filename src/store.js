@@ -27,12 +27,12 @@ const logger = createLogger({
 const routingMiddleware = routerMiddleware(browserHistory)
 
 var config = {
-  apiKey: "AIzaSyAoebI0ljWw-UylmtFJLEGhV6Seoy-qxUE",
-  authDomain: "trouble-tickets-147f2.firebaseapp.com",
-  databaseURL: "https://trouble-tickets-147f2.firebaseio.com",
-  projectId: "trouble-tickets-147f2",
-  storageBucket: "trouble-tickets-147f2.appspot.com",
-  messagingSenderId: "652356577326"
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: ""
 };
 
 firebase.initializeApp(config)

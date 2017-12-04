@@ -136,7 +136,8 @@ function validate(values){
 
 const form = reduxForm({
 	form: 'EditTaskForm',
-	validate
+	validate,
+	enableReinitialize: true
 })
 
 

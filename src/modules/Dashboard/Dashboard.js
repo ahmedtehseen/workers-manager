@@ -9,6 +9,7 @@ import { userLogout, getAllWorkers } from './Dashboard.actions';
 // styles
 import './Dashboard.css';
 
+
 export class DashboardContainer extends Component {	
   componentDidMount(){
   	this.props.getAllWorkers();
