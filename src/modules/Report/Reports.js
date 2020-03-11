@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class ReportsComponent extends Component {
+export class ReportsComponent extends Component {
 	render() {
 		return (
 			<div>
