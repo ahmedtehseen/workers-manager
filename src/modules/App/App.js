@@ -5,13 +5,18 @@ import { connect } from "react-redux";
 import "./App.css";
 import { Dashboard } from "../Dashboard";
 import { Login } from "../Login";
+import { Route } from "react-router-dom";
 
 class AppComponent extends Component {
   render() {
     const { history } = this.props;
     return (
       <div className="app-container">
-        {this.props.isLoggedIn !== true && <Login history={history} />}
+        {this.props.isLoggedIn !== true ? (
+          <Login history={history} />
+        ) : (
+          this.props.history.push("/dashboard")
+        )}
         <Snackbar
           open={this.props.snackbar.response}
           message={this.props.snackbar.message}

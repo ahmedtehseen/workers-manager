@@ -13,7 +13,7 @@
     "moment": "^2.19.3",
     "moment-countdown": "^0.0.3",
     "react": "^16.13.0",
-    "react-chat-bubble": "^0.8.6",
+    "react-chat-bubble": "^0.8.7",
     "react-dom": "^16.13.0",
     "react-redux": "^5.0.4",
     "react-redux-firebase": "^2.0.0-beta.8",

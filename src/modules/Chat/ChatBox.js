@@ -45,9 +45,10 @@ class ChatComponent extends Component {
   }
 
   renderChat() {
+    console.log("chat rendered");
     const messages =
       this.props.activeConversation.length !== 0
-        ? this.props.activeConversation.map((chat, i) => {
+        && this.props.activeConversation.map((chat, i) => {
             if (chat.from === this.props.user.uid) {
               const chatObj = [
                 {
@@ -56,7 +57,7 @@ class ChatComponent extends Component {
                   text: chat.message
                 }
               ];
-              return <ChatBubble key={i} messages={chatObj} />;
+              return <ChatBubble key={i} messages={chatObj} onNewMessage={()=>false}/>;
             } else {
               const chatObj = [
                 {
@@ -67,8 +68,8 @@ class ChatComponent extends Component {
               ];
               return <ChatBubble key={i} messages={chatObj} />;
             }
-          })
-        : "";
+          });
+        // : "";
     return messages;
   }
 
@@ -88,8 +89,6 @@ class ChatComponent extends Component {
   }
   render() {
     const key = this.props.match.params.id;
-    console.log({ k: this.props });
-    console.log(this.props.allUsers, "all users");
     return (
       <>
         {/* <Dashboard /> */}
