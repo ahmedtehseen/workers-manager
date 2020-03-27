@@ -45,32 +45,16 @@ class ChatComponent extends Component {
   }
 
   renderChat() {
-    console.log("chat rendered");
-    const messages =
-      this.props.activeConversation.length !== 0
-        && this.props.activeConversation.map((chat, i) => {
-            if (chat.from === this.props.user.uid) {
-              const chatObj = [
-                {
-                  type: 0,
-                  image: `${process.env.PUBLIC_URL + "/avatar.png"}`,
-                  text: chat.message
-                }
-              ];
-              return <ChatBubble key={i} messages={chatObj} onNewMessage={()=>false}/>;
-            } else {
-              const chatObj = [
-                {
-                  type: 1,
-                  image: `${process.env.PUBLIC_URL + "/avatar.png"}`,
-                  text: chat.message
-                }
-              ];
-              return <ChatBubble key={i} messages={chatObj} />;
-            }
-          });
-        // : "";
-    return messages;
+    if (this.props.activeConversation !== 0) {
+      return (
+        <ChatBubble
+          messages={this.props.activeConversation}
+          onNewMessage={e => this.handleSubmit(e)}
+        />
+      );
+    } else {
+      return "";
+    }
   }
 
   handleSubmit(e) {
@@ -78,9 +62,12 @@ class ChatComponent extends Component {
     if (this.state.message.length !== 0) {
       const obj = {
         from: this.props.user.uid,
-        message: this.state.message,
-        to: this.props.match.params.id
+        text: this.state.message,
+        to: this.props.match.params.id,
+        image: `${process.env.PUBLIC_URL + "/avatar.png"}`
       };
+
+      obj.type = this.props.user.uid === obj.from ? 0 : 1;
       this.props.sendMessage(obj);
     }
     this.setState({

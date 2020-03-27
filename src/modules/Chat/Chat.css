@@ -61,16 +61,7 @@
   text-decoration: none;
 }
 
- /* .new-message {
-  display: none !important;
-  overflow: hidden !important;
-} */
-
 .chat-list {
-  overflow: hidden !important;
+  height: 100% !important;
+  overflow-y: hidden !important;
 }
-
-.bubble-container {
-  height: fit-content !important;
-  padding: 6px !important;
-} 

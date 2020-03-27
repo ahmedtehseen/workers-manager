@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import * as firebase from "firebase";
+// import * as firebase from "firebase";
 import { getFirebase } from "react-redux-firebase";
 import {
   ADD_TASK,
@@ -9,6 +9,9 @@ import {
   FILE_UPLOAD_FAIL,
   createTask
 } from "./AddTask.actions";
+
+import firebase from "firebase/app";
+const firestore = firebase.firestore();
 
 export class TaskEpic {
   static uploadFile = action$ =>
@@ -61,7 +64,13 @@ export class TaskEpic {
 
   static addTask = action$ =>
     action$.ofType(CREATE_TASK).switchMap(({ payload }) => {
-      return Observable.concat(getFirebase().push("all-tasks", payload))
+      console.log(payload, "all-tasks");
+      return new Observable.concat(
+        firestore
+          .collection("All-tasks")
+          .doc(payload.adminId)
+          .add({ ...payload })
+      )
         .switchMap(res => {
           return Observable.of({
             type: ADD_TASK_SUCCESS,
