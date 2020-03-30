@@ -68,7 +68,7 @@ export class TaskEpic {
       return new Observable.concat(
         firestore
           .collection("All-tasks")
-          .doc(payload.adminId)
+          .doc()
           .add({ ...payload })
       )
         .switchMap(res => {

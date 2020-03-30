@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { firebaseConnect, populate } from "react-redux-firebase";
-import { Link } from "react-router";
+// import { Link } from "react-router";
 import { List, ListItem, Subheader, Avatar } from "material-ui";
+import { NavLink } from "react-router-dom";
 
- export class WorkerListComponent extends Component {
+export class WorkerListComponent extends Component {
   render() {
     return (
       <List>
@@ -13,7 +14,11 @@ import { List, ListItem, Subheader, Avatar } from "material-ui";
           ? Object.keys(this.props.workers)
               .filter(key => this.props.workers[key].role === "worker")
               .map(key => (
-                <Link to={`/reports/${key}`} key={key} className="link-mode">
+                <NavLink
+                  to={`/dashboard/reports/${key}`}
+                  key={key}
+                  className="link-mode"
+                >
                   <ListItem
                     key={key}
                     primaryText={this.props.workers[key].name}
@@ -21,7 +26,7 @@ import { List, ListItem, Subheader, Avatar } from "material-ui";
                       <Avatar src={process.env.PUBLIC_URL + "/avatar.png"} />
                     }
                   />
-                </Link>
+                </NavLink>
               ))
           : ""}
       </List>

@@ -16,6 +16,8 @@ import { WorkerList } from "./../../Report/WorkerList";
 import { ChatList } from "../../Chat/ChatList";
 import { ChatBox } from "../../Chat";
 import { Route } from "react-router-dom";
+import { Report } from "./../../Report/Report";
+import { Task } from "./Task";
 
 class DashboardLayoutComponent extends Component {
   render() {
@@ -131,6 +133,10 @@ class DashboardLayoutComponent extends Component {
               )}
             />
           )}
+          {this.props.workers && (
+            <Route exact path={"/dashboard/reports/:id"} component={Report} />
+          )}
+          <Route exact path={"/dashboard/task/:id"} component={Task} />
         </div>
       </div>
     );

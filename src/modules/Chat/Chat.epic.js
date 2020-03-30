@@ -17,7 +17,7 @@ export class ChatEpic {
       return new Observable(observer => {
         firestore
           .collection("chat")
-          .doc(`chats/${payload.from},${payload.to}`)
+          .doc(`${payload.from},${payload.to}`)
           .add(payload);
       });
     });
@@ -30,7 +30,7 @@ export class ChatEpic {
       return new Observable(observer => {
         firestore
           .collection("chat")
-          .doc(`chats/${action.currentUid},${action.selectedUid}`)
+          .doc(`${action.currentUid},${action.selectedUid}`)
           .get()
           .then(snapshot => {
             snapshot.docs.forEach(doc => {

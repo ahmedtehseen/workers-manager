@@ -15,12 +15,28 @@ exports.authenticateUsers = functions.https.onRequest((req, res) => {
         const { uid } = user;
         firestore
           .collection("users")
-          .doc(`users/${uid}`)
+          .doc(uid)
           .set({ email, password, name, role, timestamp, uid });
-        return res.json({ success: true, data: user, error: null });
+        return res.send({ success: true, data: user, error: null });
       })
       .catch(error => {
-        res.json({ success: false, data: null, error });
+        res.send({ success: false, data: null, error });
       });
   });
+});
+
+exports.deleteNote = functions.https.onCall((data, context) => {
+  if (!(context.auth && context.auth.token && context.auth.token.admin)) {
+    throw new functions.https.HttpsError(
+      "permission-denied",
+      "Must be an administrative user to initiate delete."
+    );
+  }
+});
+const path = data.path;
+return firebase_tools.firestore.delete(path, {
+  project: "430323187832",
+  recursive: true,
+  yes: true,
+  token: functions.config().fb.token
 });

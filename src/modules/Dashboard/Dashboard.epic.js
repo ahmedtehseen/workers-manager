@@ -31,10 +31,13 @@ export class DashboardEpic {
   static getAllWorkers = action$ =>
     action$.ofType(GET_WORKERS).switchMap(() => {
       return new Observable(observer => {
-        getFirebase()
-          .ref("users")
-          .on("value", snap => {
-            observer.next({ type: GET_WORKERS_SUCCESS, payload: snap.val() });
+        firestore
+          .doc("users")
+          .get()
+          .then(snapshot => {
+            return snapshot.docs.forEach(doc =>
+              observer.next({ type: GET_WORKERS_SUCCESS, payload: doc.data() })
+            );
           });
       }).catch(err => {
         return Observable.of({
@@ -77,7 +80,13 @@ export class DashboardEpic {
         delete payload.by;
         delete payload.taskKey;
         return Observable.of(
-          getFirebase().push(`all-tasks/${taskKey}/adminNotes`, payload)
+          // getFirebase().push(`all-tasks/${taskKey}/adminNotes`, payload)
+          firestore
+            .collection("All-tasks")
+            .doc(taskKey)
+            .collection("adminNotes")
+            .doc()
+            .add(payload)
         )
           .switchMap(res => {
             return Observable.of({
@@ -97,7 +106,13 @@ export class DashboardEpic {
         delete payload.by;
         delete payload.taskKey;
         return Observable.of(
-          getFirebase().push(`all-tasks/${taskKey}/workerNotes`, payload)
+          // getFirebase().push(`all-tasks/${taskKey}/workerNotes`, payload)
+          firestore
+            .collection("All-tasks")
+            .doc(taskKey)
+            .collection("workerNotes")
+            .doc()
+            .add(payload)
         )
           .switchMap(res => {
             return Observable.of({
@@ -118,6 +133,7 @@ export class DashboardEpic {
 
   static deleteNote = action$ =>
     action$.ofType(DELETE_NOTE).switchMap(({ payload }) => {
+      const { taskKey } = payload;
       if (payload.adminNote) {
         return Observable.of(
           getFirebase().remove(
@@ -164,7 +180,12 @@ export class DashboardEpic {
   static deliverTask = action$ =>
     action$.ofType(DELIVER_TASK).switchMap(({ payload }) => {
       return Observable.of(
-        getFirebase().update(`all-tasks/${payload}`, { status: "completed" })
+        firestore
+          .collection("All-tasks")
+          .doc(payload)
+          .update({
+            status: "completed"
+          })
       )
         .switchMap(res => {
           return Observable.of({
@@ -185,7 +206,10 @@ export class DashboardEpic {
   static reAssignTask = action$ =>
     action$.ofType(REASSIGN_TASK).switchMap(({ payload }) => {
       return Observable.of(
-        getFirebase().update(`all-tasks/${payload}`, { status: "pending" })
+        firestore
+          .collection("All-tasks")
+          .doc(payload)
+          .update({ status: "pending" })
       )
         .switchMap(res => {
           return Observable.of({
