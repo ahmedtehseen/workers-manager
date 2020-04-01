@@ -133,4 +133,4 @@ export let ChatBox = connect(mapStateToProps, {
   sendMessage,
   getActiveConversion,
   resetConversation
-})(wrappedChatComponent);
+},null,{forwardRef:true})(wrappedChatComponent);

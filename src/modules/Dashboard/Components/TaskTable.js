@@ -81,4 +81,4 @@ const mapStateToProps = state => {
   };
 };
 
-export let TaskTable = connect(mapStateToProps, {})(wrappedTaskTable);
+export let TaskTable = connect(mapStateToProps, {},null, {forwardRef:true})(wrappedTaskTable);

@@ -5,7 +5,8 @@ import {
   firebaseConnect,
   populate,
   isLoaded,
-  isEmpty
+  isEmpty,
+  firestoreConnect
 } from "react-redux-firebase";
 import {
   Table,
@@ -89,7 +90,9 @@ class CompletedTasksComponent extends Component {
           <TableRow key={key}>
             <TableRowColumn className="table-index">{id + 1}</TableRowColumn>
             <TableRowColumn className="table-title">
-              <NavLink to={`/dashboard/task/${key}`}>{this.props.tasks[key].taskTitle}</NavLink>
+              <NavLink to={`/dashboard/task/${key}`}>
+                {this.props.tasks[key].taskTitle}
+              </NavLink>
             </TableRowColumn>
             <TableRowColumn className="table-time">
               {this.props.tasks[key].assignTo}
@@ -146,23 +149,24 @@ class CompletedTasksComponent extends Component {
   }
 }
 
-const wrappedCompletedTasks = firebaseConnect(({ user }) => {
-  return [
-    `/all-tasks#orderByChild=workerId${
-      user !== null ? (user.role !== "admin" ? "&equalTo=" + user.uid : "") : ""
-    }`
-  ];
-})(CompletedTasksComponent);
+const wrappedCompletedTasks = firestoreConnect(["tasks"])(
+  CompletedTasksComponent
+);
 
 const mapStateToProps = state => {
   return {
-    tasks: populate(state.firebase, "all-tasks"),
+    tasks: state.firestore.data.tasks,
     user: state.auth.user
   };
 };
 
-export let CompletedTasks = connect(mapStateToProps, {
-  deleteTask,
-  currentTask,
-  reAssignTask
-})(wrappedCompletedTasks);
+export let CompletedTasks = connect(
+  mapStateToProps,
+  {
+    deleteTask,
+    currentTask,
+    reAssignTask
+  },
+  null,
+  { forwardRef: true }
+)(wrappedCompletedTasks);

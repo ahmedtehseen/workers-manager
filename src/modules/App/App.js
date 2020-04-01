@@ -34,4 +34,6 @@ const mapStateToProps = state => {
   };
 };
 
-export const App = connect(mapStateToProps, {})(AppComponent);
+export const App = connect(mapStateToProps, {},null,{forwardRef:true})(
+  AppComponent
+);

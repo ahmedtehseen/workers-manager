@@ -113,6 +113,6 @@ const mapStateToProps = state => {
   };
 };
 
-export let WorkerTaskTable = connect(mapStateToProps, { deleteTask })(
+export let WorkerTaskTable = connect(mapStateToProps, { deleteTask },null,{forwardRef:true})(
   wrappedWorkerTaskTable
 );

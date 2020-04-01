@@ -16,6 +16,7 @@ class SideMenuComponent extends Component {
   }
 
   handleDialogToggle() {
+    console.log("open dialogue");
     this.setState({ openDialog: !this.state.openDialog });
   }
 

@@ -6,6 +6,7 @@ import { Snackbar } from "material-ui";
 import { Navbar, SideMenu, Footer } from "../Common";
 import { DashboardLayout } from "./Components/DashboardLayout";
 import { userLogout, getAllWorkers } from "./Dashboard.actions";
+import { firestoreConnect } from "react-redux-firebase";
 // styles
 import "./Dashboard.css";
 
@@ -56,6 +57,9 @@ const mapStateToProps = state => {
   };
 };
 
-export let Dashboard = connect(mapStateToProps, { userLogout, getAllWorkers })(
-  wrappedDashboard
-);
+export let Dashboard = connect(
+  mapStateToProps,
+  { userLogout, getAllWorkers },
+  null,
+  { forwardRef: true }
+)(wrappedDashboard);

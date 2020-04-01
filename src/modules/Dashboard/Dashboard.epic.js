@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
-import { getFirebase } from "react-redux-firebase";
-import { useFirestore } from "react-redux-firebase";
+import firebase from "./../../config/firebase";
+// import { useFirestore } from "react-redux-firebase";
 
 import {
   GET_WORKERS,
@@ -25,14 +25,18 @@ import {
   // GET_MANAGERS_SUCCESS,
   // GET_MANAGERS_FAIL,
 } from "./Dashboard.actions";
-const firestore = useFirestore();
+import { App } from "../App";
+import { observable } from "rxjs";
+const firestore = firebase.firestore();
+
+const deleteCollection = firebase.functions().httpsCallable("deleteNote");
 
 export class DashboardEpic {
   static getAllWorkers = action$ =>
     action$.ofType(GET_WORKERS).switchMap(() => {
       return new Observable(observer => {
         firestore
-          .doc("users")
+          .collection("users")
           .get()
           .then(snapshot => {
             return snapshot.docs.forEach(doc =>
@@ -136,9 +140,12 @@ export class DashboardEpic {
       const { taskKey } = payload;
       if (payload.adminNote) {
         return Observable.of(
-          getFirebase().remove(
-            `all-tasks/${payload.taskKey}/adminNotes/${payload.noteKey}`
-          )
+          deleteCollection({
+            path: firestore
+              .collection("All-tasks")
+              .doc(taskKey)
+              .collection("adminNotes")
+          })
         )
           .switchMap(res => {
             return Observable.of({
@@ -156,9 +163,12 @@ export class DashboardEpic {
           });
       } else {
         return Observable.of(
-          getFirebase().remove(
-            `all-tasks/${payload.taskKey}/workerNotes/${payload.noteKey}`
-          )
+          deleteCollection({
+            path: firestore
+              .collection("All-tasks")
+              .doc(taskKey)
+              .collection("workerNotes")
+          })
         )
           .switchMap(res => {
             return Observable.of({

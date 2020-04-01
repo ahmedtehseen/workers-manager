@@ -5,7 +5,8 @@ import {
   firebaseConnect,
   populate,
   isLoaded,
-  isEmpty
+  isEmpty,
+  firestoreConnect
 } from "react-redux-firebase";
 import {
   Table,
@@ -148,18 +149,23 @@ class ManagerTaskTableComponent extends Component {
   }
 }
 
-const wrappedManagerTaskTable = firebaseConnect([
-  "/all-tasks#orderByChild=workerId"
-])(ManagerTaskTableComponent);
+const wrappedManagerTaskTable = firestoreConnect(["tasks"])(
+  ManagerTaskTableComponent
+);
 
 const mapStateToProps = state => {
   return {
-    tasks: populate(state.firebase, "all-tasks")
+    tasks: state.firestore.data.tasks
   };
 };
 
-export let ManagerTaskTable = connect(mapStateToProps, {
-  deleteTask,
-  currentTask,
-  reAssignTask
-})(wrappedManagerTaskTable);
+export let ManagerTaskTable = connect(
+  mapStateToProps,
+  {
+    deleteTask,
+    currentTask,
+    reAssignTask
+  },
+  null,
+  { forwardRef: true }
+)(wrappedManagerTaskTable);

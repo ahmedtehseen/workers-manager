@@ -17,7 +17,6 @@ import {
 } from "./modules";
 
 const Root = props => {
-  console.log([]);
   return (
     <BrowserRouter>
       <Switch>

@@ -99,5 +99,5 @@ const mapStateToProps = (state) => {
 
 export let Report = connect(
 	mapStateToProps,
-	{}
+	{},null, {forwardRef: true}
 )(wrappedReport);

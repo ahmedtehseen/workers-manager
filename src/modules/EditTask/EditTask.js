@@ -151,7 +151,7 @@ const mapStateToProps = (state) => {
 
 export let EditTask = connect(
 	mapStateToProps, 
-	{uploadTaskFile, editTask}
+	{uploadTaskFile, editTask},null, {forwardRef: true}
 )(form(wrappedEditTask));
 
 

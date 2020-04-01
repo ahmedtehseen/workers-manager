@@ -32,11 +32,15 @@ exports.deleteNote = functions.https.onCall((data, context) => {
       "Must be an administrative user to initiate delete."
     );
   }
-});
-const path = data.path;
-return firebase_tools.firestore.delete(path, {
-  project: "430323187832",
-  recursive: true,
-  yes: true,
-  token: functions.config().fb.token
+  const path = data.path;
+  return firebase_tools.firestore
+    .delete(path, {
+      project: "430323187832",
+      recursive: true,
+      yes: true,
+      token: functions.config().fb.token
+    })
+    .then(() => {
+      return { result: "All done" };
+    });
 });

@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-// import * as firebase from "firebase";
+import firebase from "./../../config/firebase";
 import { getFirebase } from "react-redux-firebase";
 import {
   ADD_TASK,
@@ -10,7 +10,6 @@ import {
   createTask
 } from "./AddTask.actions";
 
-import firebase from "firebase/app";
 const firestore = firebase.firestore();
 
 export class TaskEpic {

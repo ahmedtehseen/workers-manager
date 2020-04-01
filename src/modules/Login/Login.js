@@ -127,6 +127,6 @@ const mapStateToProps = state => {
   return {};
 };
 
-export let Login = connect(mapStateToProps, { loginSuccess, loginFail })(
+export let Login = connect(mapStateToProps, { loginSuccess, loginFail },null, {forwardRef: true})(
   form(wrappedLogin)
 );

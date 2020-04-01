@@ -1,7 +1,8 @@
 import { Observable } from "rxjs";
-import { getFirebase } from "react-redux-firebase";
-import firebase from "firebase/app";
-import { useFirestore } from "react-redux-firebase";
+import firebase from "./../../config/firebase";
+// import { getFirebase } from "react-redux-firebase";
+// import firebase from "firebase/app";
+// import { useFirestore } from "react-redux-firebase";
 
 import {
   SEND_MESSAGE,
@@ -9,7 +10,7 @@ import {
   ACTIVE_CONVERSATION_SUCCESS
 } from "./Chat.actions";
 
-const firestore = useFirestore();
+const firestore = firebase.firestore();
 
 export class ChatEpic {
   static sendMessage = action$ =>

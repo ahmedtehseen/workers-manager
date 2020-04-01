@@ -90,6 +90,6 @@ const mapStateToProps = (state) => {
 
 export let AddNotes = connect(
 	mapStateToProps, 
-	{addNote}
+	{addNote},null, {forwardRef: true}
 )(form(wrappedAddNote));
 

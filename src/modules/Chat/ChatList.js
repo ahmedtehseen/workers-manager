@@ -68,4 +68,6 @@ const mapStateToProps = state => {
   };
 };
 
-export let ChatList = connect(mapStateToProps, {})(wrappedChatList);
+export let ChatList = connect(mapStateToProps, {},null,{forwardRef:true})(
+  wrappedChatList
+);

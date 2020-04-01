@@ -135,7 +135,7 @@ const mapStateToProps = state => {
   };
 };
 
-export let DeliverTask = connect(mapStateToProps, { deliverTask })(
+export let DeliverTask = connect(mapStateToProps, { deliverTask },null, {forwardRef: true})(
   form(wrappedDeliverTask)
 );
 

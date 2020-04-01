@@ -10,18 +10,17 @@ import styles from "../Dashboard.styles";
 import { TaskTable } from "./TaskTable";
 import { TotalTasks } from "./TotalTasks";
 import { CompletedTasks } from "./CompletedTasks";
-// import { WorkerTaskTable } from "./WorkerTaskTable";
-// import { Reports } from "./../../Report/Reports";
 import { WorkerList } from "./../../Report/WorkerList";
 import { ChatList } from "../../Chat/ChatList";
 import { ChatBox } from "../../Chat";
 import { Route } from "react-router-dom";
 import { Report } from "./../../Report/Report";
 import { Task } from "./Task";
+import { firestoreConnect } from "react-redux-firebase";
 
 class DashboardLayoutComponent extends Component {
   render() {
-    console.log(this.props.userS, "useerrrrss");
+    console.log(this.props.tasks);
     const { user } = this.props;
     const tasksKeys =
       this.props.tasks !== undefined
@@ -143,19 +142,18 @@ class DashboardLayoutComponent extends Component {
   }
 }
 
-const wrappedDashboardLayout = firebaseConnect(["all-tasks"])(
+const wrappedDashboardLayout = firestoreConnect(["tasks"])(
   DashboardLayoutComponent
 );
 
 const mapStateToProps = state => {
   return {
-    tasks: populate(state.firebase, "all-tasks"),
+    tasks: state.firestore.data.tasks,
     user: state.auth.user,
     workers: state.dashboard.workers
   };
 };
 
-export let DashboardLayout = connect(
-  mapStateToProps,
-  {}
-)(wrappedDashboardLayout);
+export let DashboardLayout = connect(mapStateToProps, {}, null, {
+  forwardRef: true
+})(wrappedDashboardLayout);

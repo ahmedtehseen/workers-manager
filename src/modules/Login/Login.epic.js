@@ -1,9 +1,11 @@
 import { Observable } from "rxjs";
-// import { getFirebase } from "react-redux-firebase";
+import firebase from "./../../config/firebase";
 import { USER_LOGIN_SUCCESS } from "./Login.actions";
 // import firebase from "./../../config/firebase";
-import firebase from "firebase/app";
 
+// import { useFirestore } from "redux-firestore";
+
+// const firestore = firebase.firestore();
 const firestore = firebase.firestore();
 
 export class LoginEpic {
@@ -12,7 +14,7 @@ export class LoginEpic {
       return new Observable(observer => {
         firestore
           .collection("users")
-          .doc(`users/${auth.uid}`)
+          .doc(auth.uid)
           .get()
           .then(doc => {
             observer.next({

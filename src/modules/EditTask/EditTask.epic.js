@@ -1,6 +1,7 @@
 import { Observable } from "rxjs";
 // import * as firebase from 'firebase';
-import { getFirebase } from "react-redux-firebase";
+
+import firebase from "./../../config/firebase";
 import {
   EDIT_TASK,
   EDIT_TASK_SUCCESS,
@@ -10,7 +11,6 @@ import {
   editTask
 } from "./EditTask.actions";
 
-import firebase from "firebase/app";
 const firestore = firebase.firestore();
 
 export class EditTaskEpic {
@@ -66,7 +66,7 @@ export class EditTaskEpic {
   static editTask = action$ =>
     action$.ofType(EDIT_TASK).switchMap(({ payload }) => {
       const { key } = payload;
-    //   delete payload.key;
+      //   delete payload.key;
       return Observable.concat(
         firestore
           .collection("All-tasks")

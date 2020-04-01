@@ -44,4 +44,4 @@ const mapStateToProps = state => {
   };
 };
 
-export let WorkerList = connect(mapStateToProps, {})(wrappedWorkerList);
+export let WorkerList = connect(mapStateToProps, {},null,{forwardRef:true})(wrappedWorkerList);

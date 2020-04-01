@@ -258,4 +258,4 @@ const mapStateToProps = state => {
   };
 };
 
-export let Task = connect(mapStateToProps, { deleteNote })(wrappedTask);
+export let Task = connect(mapStateToProps, { deleteNote },null,{forwardRef:true})(wrappedTask);

@@ -22,6 +22,7 @@ import { TableMenuButton } from "./TableMenuButton";
 // actions
 import { deleteTask, currentTask, reAssignTask } from "../Dashboard.actions";
 import { NavLink } from "react-router-dom";
+import { firestoreConnect } from "react-redux-firebase";
 
 class TotalTasksComponent extends Component {
   constructor(props) {
@@ -146,23 +147,22 @@ class TotalTasksComponent extends Component {
   }
 }
 
-const wrappedTotalTasks = firebaseConnect(({ user }) => {
-  return [
-    `/all-tasks#orderByChild=workerId${
-      user !== null ? (user.role !== "admin" ? "&equalTo=" + user.uid : "") : ""
-    }`
-  ];
-})(TotalTasksComponent);
+const wrappedTotalTasks = firestoreConnect(["tasks"])(TotalTasksComponent);
 
 const mapStateToProps = state => {
   return {
-    tasks: populate(state.firebase, "all-tasks"),
+    tasks: state.firestore.data.tasks,
     user: state.auth.user
   };
 };
 
-export let TotalTasks = connect(mapStateToProps, {
-  deleteTask,
-  currentTask,
-  reAssignTask
-})(wrappedTotalTasks);
+export let TotalTasks = connect(
+  mapStateToProps,
+  {
+    deleteTask,
+    currentTask,
+    reAssignTask
+  },
+  null,
+  { forwardRef: true }
+)(wrappedTotalTasks);
