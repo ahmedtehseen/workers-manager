@@ -9,8 +9,10 @@ import {
   GET_ACTIVE_CONVERSATION,
   ACTIVE_CONVERSATION_SUCCESS
 } from "./Chat.actions";
+import { observable } from "rxjs";
 
 const firestore = firebase.firestore();
+let messages = [];
 
 export class ChatEpic {
   static sendMessage = action$ =>
@@ -19,7 +21,8 @@ export class ChatEpic {
         firestore
           .collection("chat")
           .doc(`${payload.from},${payload.to}`)
-          .add(payload);
+          .collection(`${payload.from},${payload.to}`)
+          .add({ ...payload });
       });
     });
 
@@ -28,19 +31,19 @@ export class ChatEpic {
 
   static getActiveConversation = action$ =>
     action$.ofType(GET_ACTIVE_CONVERSATION).switchMap(action => {
+      console.log(action.currentUid);
+      console.log(action.selectedUid);
       return new Observable(observer => {
         firestore
           .collection("chat")
           .doc(`${action.currentUid},${action.selectedUid}`)
-          .get()
-          .then(snapshot => {
-            snapshot.docs.forEach(doc => {
-              observer.next({
-                type: ACTIVE_CONVERSATION_SUCCESS,
-                payload: doc.data()
-              });
-            });
+          .collection(`${action.currentUid},${action.selectedUid}`)
+          .where("to", "==", action.selectedUid)
+          .onSnapshot(async snap => {
+            console.log("first");
+            snap.docs.forEach(doc => messages.push(doc.data()));
           });
+      
       });
     });
 }

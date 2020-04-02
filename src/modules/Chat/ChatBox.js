@@ -75,6 +75,7 @@ class ChatComponent extends Component {
     });
   }
   render() {
+    console.log(this.props.activeConversation, 'active');
     const key = this.props.match.params.id;
     return (
       <>
@@ -129,8 +130,13 @@ const mapStateToProps = state => {
   };
 };
 
-export let ChatBox = connect(mapStateToProps, {
-  sendMessage,
-  getActiveConversion,
-  resetConversation
-},null,{forwardRef:true})(wrappedChatComponent);
+export let ChatBox = connect(
+  mapStateToProps,
+  {
+    sendMessage,
+    getActiveConversion,
+    resetConversation
+  },
+  null,
+  { forwardRef: true }
+)(wrappedChatComponent);

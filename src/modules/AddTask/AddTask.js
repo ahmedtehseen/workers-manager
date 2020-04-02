@@ -65,96 +65,98 @@ class AddTaskComponent extends Component {
         contentStyle={{ display: "flex", justifyContent: "center" }}
         className="task-modal"
       >
-        <form
-          onSubmit={handleSubmit(props => this.onFormSubmit(props))}
-          className="add-task-form"
-        >
-          <div className="top-task-fileds">
-            <Field
-              name="taskTitle"
-              component={TextField}
-              hintText="Task Title"
-              type="text"
-            />
-            &nbsp;&nbsp;&nbsp;
-            <Field
-              name="worker"
-              component={SelectField}
-              hintText="Select worker name"
-            >
-              {this.props.workers !== null ? (
-                Object.keys(this.props.workers)
-                  .filter(key => {
-                    return this.props.workers[key].role === "worker";
-                  })
-                  .map(key => (
-                    <MenuItem
-                      key={key}
-                      value={this.props.workers[key]}
-                      primaryText={this.props.workers[key].name}
-                    />
-                  ))
-              ) : (
-                <MenuItem value={"No user"} primaryText="Please wait..." />
-              )}
-            </Field>
-          </div>
-          <br />
-          <div className="middle-textarea">
-            <Field
-              name="details"
-              multiLine={true}
-              rows={3}
-              component={TextField}
-              hintText="Task Details"
-              fullWidth={true}
-              rowsMax={5}
-            />
-          </div>
-          <br />
-          <div className="bottom-task-fields">
-            <FlatButton
-              label="Add Attachment"
-              backgroundColor={"#fff"}
-              labelPosition="before"
-              style={styles.uploadButton}
-              containerElement="label"
-              hoverColor={"#fff"}
-              icon={<AttachFile color={"#E0E0E0"} />}
-              labelStyle={{ color: "#E0E0E0" }}
-            >
-              <input
-                type="file"
-                style={styles.uploadInput}
-                ref={file => {
-                  this.file = file;
-                }}
-              />
-            </FlatButton>
-            &nbsp;&nbsp;&nbsp;
-            <Field
-              name="dateOfSubmition"
-              component={DatePicker}
-              format={null}
-              hintText="Date of Completion"
-            />
-          </div>
-          <RaisedButton
-            buttonStyle={{
-              borderRadius: "2em",
-              width: "150px"
-            }}
-            style={{
-              borderRadius: "2em",
-              width: "150px",
-              marginTop: "2em"
-            }}
-            labelColor="#fff"
-            backgroundColor={themeColor}
-            label="Assign Task"
-            type="submit"
+      
+    
+      <form
+        onSubmit={handleSubmit(props => this.onFormSubmit(props))}
+        className="add-task-form"
+      >
+        <div className="top-task-fileds">
+          <Field
+            name="taskTitle"
+            component={TextField}
+            hintText="Task Title"
+            type="text"
           />
-        </form>
+          &nbsp;&nbsp;&nbsp;
+          <Field
+            name="worker"
+            component={SelectField}
+            hintText="Select worker name"
+          >
+            {this.props.workers !== null ? (
+              Object.keys(this.props.workers)
+                .filter(key => {
+                  return this.props.workers[key].role === "worker";
+                })
+                .map(key => (
+                  <MenuItem
+                    key={key}
+                    value={this.props.workers[key]}
+                    primaryText={this.props.workers[key].name}
+                  />
+                ))
+            ) : (
+              <MenuItem value={"No user"} primaryText="Please wait..." />
+            )}
+          </Field>
+        </div>
+        <br />
+        <div className="middle-textarea">
+          <Field
+            name="details"
+            multiLine={true}
+            rows={3}
+            component={TextField}
+            hintText="Task Details"
+            fullWidth={true}
+            rowsMax={5}
+          />
+        </div>
+        <br />
+        <div className="bottom-task-fields">
+          <FlatButton
+            label="Add Attachment"
+            backgroundColor={"#fff"}
+            labelPosition="before"
+            style={styles.uploadButton}
+            containerElement="label"
+            hoverColor={"#fff"}
+            icon={<AttachFile color={"#E0E0E0"} />}
+            labelStyle={{ color: "#E0E0E0" }}
+          >
+            <input
+              type="file"
+              style={styles.uploadInput}
+              ref={file => {
+                this.file = file;
+              }}
+            />
+          </FlatButton>
+          &nbsp;&nbsp;&nbsp;
+          <Field
+            name="dateOfSubmition"
+            component={DatePicker}
+            format={null}
+            hintText="Date of Completion"
+          />
+        </div>
+        <RaisedButton
+          buttonStyle={{
+            borderRadius: "2em",
+            width: "150px"
+          }}
+          style={{
+            borderRadius: "2em",
+            width: "150px",
+            marginTop: "2em"
+          }}
+          labelColor="#fff"
+          backgroundColor={themeColor}
+          label="Assign Task"
+          type="submit"
+        />
+      </form>
       </Dialog>
     );
   }

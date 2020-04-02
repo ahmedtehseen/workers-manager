@@ -6,6 +6,7 @@ import "./App.css";
 import { Dashboard } from "../Dashboard";
 import { Login } from "../Login";
 import { Route } from "react-router-dom";
+import { LoginForm } from "../Login/LoginForm";
 
 class AppComponent extends Component {
   render() {
@@ -13,7 +14,7 @@ class AppComponent extends Component {
     return (
       <div className="app-container">
         {this.props.isLoggedIn !== true ? (
-          <Login history={history} />
+          <LoginForm history={history} />
         ) : (
           this.props.history.push("/dashboard")
         )}
@@ -34,6 +35,6 @@ const mapStateToProps = state => {
   };
 };
 
-export const App = connect(mapStateToProps, {},null,{forwardRef:true})(
+export const App = connect(mapStateToProps, {}, null, { forwardRef: true })(
   AppComponent
 );

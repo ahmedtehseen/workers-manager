@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { firebaseConnect, populate } from "react-redux-firebase";
+import {
+  firebaseConnect,
+  populate,
+  firestoreConnect
+} from "react-redux-firebase";
 import { connect } from "react-redux";
 // styles
 import "./Chat.css";
@@ -10,14 +14,14 @@ class ChatComponent extends Component {
   }
 }
 
-const wrappedChat = firebaseConnect(["all-tasks"])(ChatComponent);
+const wrappedChat = firestoreConnect(["tasks"])(ChatComponent);
 
 const mapStateToProps = state => {
   return {
-    tasks: populate(state.firebase, "all-tasks")
+    tasks: state.firestore.data.tasks
   };
 };
 
-export let Chat = connect(mapStateToProps, {}, null, {forwardRef:true})(
+export let Chat = connect(mapStateToProps, {}, null, { forwardRef: true })(
   wrappedChat
 );

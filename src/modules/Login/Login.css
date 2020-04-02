@@ -1,36 +1,36 @@
 .text-center {
-	text-align: center;
+  text-align: center;
 }
 
 .login-container {
-	display: flex;
+  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
 .login-paper {
-	height: 400px;
+  height: 400px;
   width: 350px;
   margin: 15vh;
 }
 
-.login-paper>h2 {
-  background: #7AB15A;
+.login-paper > h2 {
+  background: #7ab15a;
   margin: 0;
   padding: 1em;
   color: #fff;
 }
 
 .login-form {
-	display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 50vh;
+  height: 46vh;
 }
 
-.btn-group{
+.btn-group {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -39,6 +39,6 @@
 @media only screen and (max-width: 500px) {
   .login-form {
     padding: 1em;
-    height: 46vh;
+    height: 35svh;
   }
 }

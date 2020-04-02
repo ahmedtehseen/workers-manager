@@ -31,6 +31,7 @@ const firestore = firebase.firestore();
 
 const deleteCollection = firebase.functions().httpsCallable("deleteNote");
 
+const workersArray = [];
 export class DashboardEpic {
   static getAllWorkers = action$ =>
     action$.ofType(GET_WORKERS).switchMap(() => {
@@ -39,9 +40,12 @@ export class DashboardEpic {
           .collection("users")
           .get()
           .then(snapshot => {
-            return snapshot.docs.forEach(doc =>
-              observer.next({ type: GET_WORKERS_SUCCESS, payload: doc.data() })
-            );
+            console.log(snapshot.docs);
+            snapshot.docs.forEach(doc => workersArray.push(doc.data()));
+            return observer.next({
+              type: GET_WORKERS_SUCCESS,
+              payload: workersArray
+            });
           });
       }).catch(err => {
         return Observable.of({
@@ -57,7 +61,7 @@ export class DashboardEpic {
       .switchMap(({ payload }) => {
         return Observable.of(
           firestore
-            .collection("All-tasks")
+            .collection("tasks")
             .doc(payload)
             .delete()
         );
@@ -86,7 +90,7 @@ export class DashboardEpic {
         return Observable.of(
           // getFirebase().push(`all-tasks/${taskKey}/adminNotes`, payload)
           firestore
-            .collection("All-tasks")
+            .collection("tasks")
             .doc(taskKey)
             .collection("adminNotes")
             .doc()
@@ -142,7 +146,7 @@ export class DashboardEpic {
         return Observable.of(
           deleteCollection({
             path: firestore
-              .collection("All-tasks")
+              .collection("tasks")
               .doc(taskKey)
               .collection("adminNotes")
           })
@@ -165,7 +169,7 @@ export class DashboardEpic {
         return Observable.of(
           deleteCollection({
             path: firestore
-              .collection("All-tasks")
+              .collection("tasks")
               .doc(taskKey)
               .collection("workerNotes")
           })
@@ -191,7 +195,7 @@ export class DashboardEpic {
     action$.ofType(DELIVER_TASK).switchMap(({ payload }) => {
       return Observable.of(
         firestore
-          .collection("All-tasks")
+          .collection("tasks")
           .doc(payload)
           .update({
             status: "completed"
@@ -217,7 +221,7 @@ export class DashboardEpic {
     action$.ofType(REASSIGN_TASK).switchMap(({ payload }) => {
       return Observable.of(
         firestore
-          .collection("All-tasks")
+          .collection("tasks")
           .doc(payload)
           .update({ status: "pending" })
       )

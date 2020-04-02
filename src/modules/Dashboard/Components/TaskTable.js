@@ -10,6 +10,7 @@ import { WorkerTaskTable } from "./WorkerTaskTable";
 // styles
 import styles from "../Dashboard.styles";
 
+
 export class TaskTableComponent extends Component {
   constructor(props) {
     super(props);	

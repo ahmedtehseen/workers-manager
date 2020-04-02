@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import { Link } from "react-router";
 import { Drawer, AppBar, IconButton, MenuItem } from "material-ui";
 import Menu from "material-ui/svg-icons/navigation/menu";
-import { AddTask } from "../../AddTask";
+// import { AddTask } from "../../AddTask";
 // styles
 import styles from "./SideMenu.styles";
 import { NavLink } from "react-router-dom";
+
+import { AddTask } from "../../AddTask";
+// import AddTaskDialog from "../../AddTask/AddTaskDialog";
 
 class SideMenuComponent extends Component {
   constructor(props) {
