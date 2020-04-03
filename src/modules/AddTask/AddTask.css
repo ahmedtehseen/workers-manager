@@ -1,15 +1,15 @@
-.top-task-fileds{
-	display: flex;
-	flex-direction: row;
-	flex: 1;
-	/*border-top: 1px solid;*/
+.top-task-fileds {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  /*border-top: 1px solid;*/
 }
 
-.middle-textarea{
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	flex: 1 ;
+.middle-textarea {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 /*.middle-textarea>div>div {
@@ -17,23 +17,49 @@
 	top: 12px !important;
 }*/
 
-.bottom-task-fields{
-	display: flex;
-	flex-direction: row;
-	flex: 1;
-	/*border-bottom: 1px solid;*/
+.bottom-task-fields {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  /*border-bottom: 1px solid;*/
 }
 
-.task-modal h3{
-	padding: 10px 24px 10px !important;
-	border-bottom: 1px solid #E0E0E0;
-	font-size: 18px !important;
+.task-modal h3 {
+  padding: 10px 24px 10px !important;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 18px !important;
 }
-
 
 .task-modal-text-field {
-	/*margin: 1em;*/
+  /*margin: 1em;*/
 }
-.add-task-form{
-	
+.add-task-form {
 }
+
+#worker-select {
+  width: 14em !important;
+}
+
+.MuiPopover-root {
+  z-index: 1600 !important;
+}
+
+.MuiInput-underline:before {
+  bottom: 7.5px !important;
+}
+
+.MuiInput-underline:hover:not(.Mui-disabled):before {
+  border: none !important;
+}
+
+.MuiInput-underline:after {
+  display: none;
+}
+.MuiInput-underline {
+  margin-left: 1em !important;
+}
+
+/* #worker-select-label {
+  margin-left: 1em !important;
+  color: #7ab15a !important ;
+} */

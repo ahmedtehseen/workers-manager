@@ -1,11 +1,7 @@
 import { Observable } from "rxjs";
 import firebase from "./../../config/firebase";
 import { USER_LOGIN_SUCCESS } from "./Login.actions";
-// import firebase from "./../../config/firebase";
 
-// import { useFirestore } from "redux-firestore";
-
-// const firestore = firebase.firestore();
 const firestore = firebase.firestore();
 
 export class LoginEpic {

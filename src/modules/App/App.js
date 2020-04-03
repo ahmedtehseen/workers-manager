@@ -1,12 +1,8 @@
 import React, { Component } from "react";
 import { Snackbar } from "material-ui";
 import { connect } from "react-redux";
-// styles
 import "./App.css";
-import { Dashboard } from "../Dashboard";
-import { Login } from "../Login";
-import { Route } from "react-router-dom";
-import { LoginForm } from "../Login/LoginForm";
+import { Login } from "./../Login/Login";
 
 class AppComponent extends Component {
   render() {
@@ -14,7 +10,7 @@ class AppComponent extends Component {
     return (
       <div className="app-container">
         {this.props.isLoggedIn !== true ? (
-          <LoginForm history={history} />
+          <Login history={history} />
         ) : (
           this.props.history.push("/dashboard")
         )}

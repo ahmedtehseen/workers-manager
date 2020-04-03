@@ -8,7 +8,8 @@ import styles from "./SideMenu.styles";
 import { NavLink } from "react-router-dom";
 
 import { AddTask } from "../../AddTask";
-// import AddTaskDialog from "../../AddTask/AddTaskDialog";
+
+import { AddTaskForm } from "./../../AddTask/AddTaskForm";
 
 class SideMenuComponent extends Component {
   constructor(props) {
@@ -134,7 +135,7 @@ class SideMenuComponent extends Component {
         ) : (
           ""
         )}
-        <AddTask
+        <AddTaskForm
           openDialog={this.state.openDialog}
           handleDialogToggle={() => this.handleDialogToggle()}
         />

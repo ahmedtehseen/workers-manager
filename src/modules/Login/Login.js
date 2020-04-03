@@ -115,7 +115,7 @@ const mapStateToProps = state => {
 
 const wrappedLogin = firestoreConnect()(LoginContainer);
 
-export let LoginForm = connect(
+export let Login = connect(
   mapStateToProps,
   { loginSuccess, loginFail },
   null,
