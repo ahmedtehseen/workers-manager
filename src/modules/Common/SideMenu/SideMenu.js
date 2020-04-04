@@ -7,9 +7,9 @@ import Menu from "material-ui/svg-icons/navigation/menu";
 import styles from "./SideMenu.styles";
 import { NavLink } from "react-router-dom";
 
-import { AddTask } from "../../AddTask";
 
-import { AddTaskForm } from "./../../AddTask/AddTaskForm";
+
+import { AddTask } from "./../../AddTask/AddTask.js";
 
 class SideMenuComponent extends Component {
   constructor(props) {
@@ -135,7 +135,7 @@ class SideMenuComponent extends Component {
         ) : (
           ""
         )}
-        <AddTaskForm
+        <AddTask
           openDialog={this.state.openDialog}
           handleDialogToggle={() => this.handleDialogToggle()}
         />

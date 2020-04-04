@@ -11,7 +11,7 @@ exports.authenticateUsers = functions.https.onRequest((req, res) => {
     admin
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(user => {
+      .then((user) => {
         const { uid } = user;
         firestore
           .collection("users")
@@ -19,7 +19,7 @@ exports.authenticateUsers = functions.https.onRequest((req, res) => {
           .set({ email, password, name, role, timestamp, uid });
         return res.send({ success: true, data: user, error: null });
       })
-      .catch(error => {
+      .catch((error) => {
         res.send({ success: false, data: null, error });
       });
   });
@@ -38,7 +38,7 @@ exports.deleteNote = functions.https.onCall((data, context) => {
       project: "430323187832",
       recursive: true,
       yes: true,
-      token: functions.config().fb.token
+      token: functions.config().fb.token,
     })
     .then(() => {
       return { result: "All done" };

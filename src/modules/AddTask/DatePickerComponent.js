@@ -2,18 +2,11 @@ import React, { useState } from "react";
 import MomentUtils from "@date-io/moment";
 import "./DatePicker.css";
 
-import {
-  DatePicker,
-  TimePicker,
-  DateTimePicker,
-  MuiPickersUtilsProvider
-} from "material-ui-pickers";
+import { DatePicker, MuiPickersUtilsProvider } from "material-ui-pickers";
 import img from "./../../images/chevron-right-solid.svg";
 
-function DatePickerComponent() {
-  const [selectedDate, handleDateChange] = useState(new Date());
+function DatePickerComponent({ setFieldValue, name, value }) {
   const injectTheme = () => {
-    console.log("added");
     let node = document.getElementById("date-picker-arrow").parentNode
       .parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
       .parentElement;
@@ -25,7 +18,7 @@ function DatePickerComponent() {
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <div className="pickers">
           <DatePicker
-            value={selectedDate}
+            // value={value}
             leftArrowIcon={
               <img
                 src={img}
@@ -43,6 +36,11 @@ function DatePickerComponent() {
                 style={{ height: "17px" }}
               />
             }
+            onChange={(value) => {
+              console.log(value);
+              setFieldValue("dateOfSubmission", value._i);
+            }}
+            // name={name}
           />
         </div>
       </MuiPickersUtilsProvider>

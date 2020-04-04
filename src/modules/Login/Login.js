@@ -13,36 +13,35 @@ const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required("Enter Your Email Address")
     .email("Invalid Email"),
-  password: Yup.string().required("Enter your password")
+  password: Yup.string().required("Enter your password"),
 });
 
 class LoginContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
   }
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <Formik
           initialValues={{
             email: "",
-            password: ""
+            password: "",
           }}
           validationSchema={validationSchema}
-          onSubmit={values => {
+          onSubmit={(values) => {
             firebase
               .auth()
               .signInWithEmailAndPassword(values.email, values.password)
-              .then(res => {
+              .then((res) => {
                 return this.props.loginSuccess(res);
               })
               .then(() => this.props.history.push("/dashboard"))
-              .catch(err => this.props.loginFail(err));
+              .catch((err) => this.props.loginFail(err));
           }}
         >
           {({
@@ -52,7 +51,7 @@ class LoginContainer extends Component {
             handleChange,
             handleBlur,
             handleSubmit,
-            isSubmitting
+            isSubmitting,
           }) => (
             <div className="login-container">
               <Paper className="login-paper" zDepth={2}>
@@ -86,11 +85,11 @@ class LoginContainer extends Component {
                   <RaisedButton
                     buttonStyle={{
                       borderRadius: "2em",
-                      width: "150px"
+                      width: "150px",
                     }}
                     style={{
                       borderRadius: "2em",
-                      width: "150px"
+                      width: "150px",
                     }}
                     labelColor="#fff"
                     backgroundColor={themeColor}
@@ -109,15 +108,12 @@ class LoginContainer extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {};
 };
 
 const wrappedLogin = firestoreConnect()(LoginContainer);
 
-export let Login = connect(
-  mapStateToProps,
-  { loginSuccess, loginFail },
-  null,
-  { forwardRef: true }
-)(wrappedLogin);
+export let Login = connect(mapStateToProps, { loginSuccess, loginFail }, null, {
+  forwardRef: true,
+})(wrappedLogin);

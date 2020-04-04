@@ -5,7 +5,7 @@ import {
   IconButton,
   DropDownMenu,
   MenuItem,
-  Avatar
+  Avatar,
 } from "material-ui";
 import { NavLink } from "react-router-dom";
 // import CommunicationMessage from 'material-ui/svg-icons/communication/email';
@@ -14,13 +14,15 @@ import Forum from "material-ui/svg-icons/communication/forum";
 import PersonAdd from "material-ui/svg-icons/social/person-add";
 import ExpandMore from "material-ui/svg-icons/navigation/expand-more";
 // app components
-import { AddUser } from "../../AddUser";
+
 // styles
 import styles from "./Navbar.styles";
+// import { AddUser } from './../../AddUser/AddUser';
+import { AddUser } from "./../../AddUser/AddUser";
 
 const themeColor = "#7AB15A";
 
-const IconLeft = props => {
+const IconLeft = (props) => {
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
       {props.userRole !== null && props.userRole === "worker" ? (
@@ -78,7 +80,7 @@ class NavbarComponent extends Component {
     super(props);
     this.state = {
       value: 1,
-      openDialog: false
+      openDialog: false,
     };
   }
 
