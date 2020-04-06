@@ -36,30 +36,29 @@
 .add-task-form {
 }
 
-#worker-select {
-  width: 14em !important;
+
+
+#worker-select:hover {
+  background-color: transparent !important;
 }
+#worker-select:focus {
+  background-color: transparent !important;
+}
+#worker-select:active {
+  background-color: transparent !important;
+}
+
 
 .MuiPopover-root {
   z-index: 1600 !important;
 }
 
+
 .MuiInput-underline:before {
-  bottom: 7.5px !important;
+  border-bottom-color: rgb(224, 224, 224) !important;
 }
 
 .MuiInput-underline:hover:not(.Mui-disabled):before {
   border: none !important;
 }
 
-.MuiInput-underline:after {
-  display: none;
-}
-.MuiInput-underline {
-  margin-left: 1em !important;
-}
-
-/* #worker-select-label {
-  margin-left: 1em !important;
-  color: #7ab15a !important ;
-} */

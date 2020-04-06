@@ -11,10 +11,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import { connect } from "react-redux";
 import { firebaseConnect } from "react-redux-firebase";
 import { Formik } from "formik";
-import * as Yup from "yup";
 import "./AddTask.css";
 import { addTask, createTask } from "./AddTask.actions";
-import { Input } from "@material-ui/core";
 import AttachFile from "material-ui/svg-icons/editor/attach-file";
 
 import DatePickerComponent from "./DatePickerComponent";
@@ -23,8 +21,6 @@ const themeColor = "#7AB15A";
 
 class AddTaskComponent extends Component {
   state = {
-    worker: "",
-    description: "",
     selectedDate: new Date(),
   };
   handleDateChange = (date) => {
@@ -32,6 +28,7 @@ class AddTaskComponent extends Component {
       selectedDate: date,
     });
   };
+
   render() {
     console.log(this.props.workers);
     const { workers } = this.props;
@@ -48,7 +45,7 @@ class AddTaskComponent extends Component {
             dateOfSubmission: new Date(),
           }}
           onSubmit={(values) => {
-            console.log(values.dateOfSubmission, "checking");
+            console.log(values);
             const file = this.file.files[0];
 
             const status = "pending";
@@ -95,8 +92,8 @@ class AddTaskComponent extends Component {
             handleBlur,
             handleSubmit,
             isSubmitting,
-            setFieldValue,
             resetForm,
+            setFieldValue,
           }) => (
             <Dialog
               title="Create A New Task"
@@ -107,19 +104,23 @@ class AddTaskComponent extends Component {
               className="task-modal"
             >
               <form className="add-task-form">
-                <div className="top-task-fileds">
+                <div>
                   <TextField
                     name="taskTitle"
                     placeholder="Task Title"
                     value={values.taskTitle}
                     onChange={handleChange}
+                    fullWidth
                   ></TextField>
-
+                </div>
+                <div style={{ marginTop: "0.5em" }}>
+                  <InputLabel>Worker</InputLabel>
                   <Select
                     id="worker-select"
                     value={values.worker}
                     onChange={handleChange}
                     name="worker"
+                    fullWidth
                   >
                     {menuItems !== null &&
                       menuItems.map((item) => (
@@ -133,6 +134,7 @@ class AddTaskComponent extends Component {
                       ))}
                   </Select>
                 </div>
+
                 <br />
                 <div className="middle-textarea">
                   <TextField
@@ -155,6 +157,7 @@ class AddTaskComponent extends Component {
                     hoverColor={"#fff"}
                     icon={<AttachFile color={"#E0E0E0"} />}
                     labelStyle={{ color: "#E0E0E0" }}
+                 
                   >
                     <input
                       type="file"
@@ -168,7 +171,6 @@ class AddTaskComponent extends Component {
                   <DatePickerComponent
                     setFieldValue={setFieldValue}
                     name="dateOfSubmission"
-                    value={values.dateOfSubmission}
                   />
                 </div>
                 <RaisedButton
@@ -184,11 +186,7 @@ class AddTaskComponent extends Component {
                   labelColor="#fff"
                   backgroundColor={themeColor}
                   label="Assign Task"
-                  type="submit"
-                  onClick={() => {
-                    handleSubmit();
-                    this.props.handleDialogToggle();
-                  }}
+                  onClick={handleSubmit}
                 />
               </form>
             </Dialog>

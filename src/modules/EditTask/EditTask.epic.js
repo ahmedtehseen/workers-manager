@@ -1,5 +1,4 @@
 import { Observable } from "rxjs";
-// import * as firebase from 'firebase';
 
 import firebase from "./../../config/firebase";
 import {
@@ -66,7 +65,7 @@ export class EditTaskEpic {
   static editTask = action$ =>
     action$.ofType(EDIT_TASK).switchMap(({ payload }) => {
       const { key } = payload;
-      //   delete payload.key;
+     
       return Observable.concat(
         firestore
           .collection("All-tasks")

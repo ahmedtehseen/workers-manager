@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { firebaseConnect, populate } from "react-redux-firebase";
+import {
+  firebaseConnect,
+  populate,
+  firestoreConnect,
+} from "react-redux-firebase";
 import moment from "moment";
 import { RaisedButton, IconButton } from "material-ui";
 import NoteAdd from "material-ui/svg-icons/action/note-add";
@@ -23,7 +27,7 @@ class TaskComponent extends Component {
     super(props);
     this.state = {
       isOpen: false,
-      isDeliverDialogOpen: false
+      isDeliverDialogOpen: false,
     };
   }
 
@@ -40,9 +44,10 @@ class TaskComponent extends Component {
   }
 
   render() {
+    console.log(this.props);
     const { user, tasks } = this.props;
-    const { key } = this.props.params;
-    console.log("Single Task:", tasks);
+    const key = this.props.match.params.id;
+    console.log(key);
     return (
       <div>
         <div style={styles.taskHeader}>
@@ -126,7 +131,7 @@ class TaskComponent extends Component {
                     {tasks[key].adminNotes !== undefined ? (
                       <div className="admin-notes">
                         <h3>Notes by Admin:</h3>
-                        {Object.keys(tasks[key].adminNotes).map(noteKey => {
+                        {Object.keys(tasks[key].adminNotes).map((noteKey) => {
                           return (
                             <p key={noteKey} className="note">
                               <Note color={themeColor} />
@@ -155,7 +160,7 @@ class TaskComponent extends Component {
                     {tasks[key].workerNotes !== undefined ? (
                       <div className="worker-notes">
                         <h3>Notes by Worker:</h3>
-                        {Object.keys(tasks[key].workerNotes).map(noteKey => {
+                        {Object.keys(tasks[key].workerNotes).map((noteKey) => {
                           return (
                             <p key={noteKey} className="note">
                               <Note color={themeColor} />
@@ -199,7 +204,7 @@ class TaskComponent extends Component {
                       style={{
                         borderRadius: "2em",
                         width: "200px",
-                        margin: "0 1.5em 2em"
+                        margin: "0 1.5em 2em",
                       }}
                       backgroundColor={themeColor}
                       labelColor="#fff"
@@ -243,19 +248,15 @@ class TaskComponent extends Component {
   }
 }
 
-const wrappedTask = firebaseConnect(({ user }) => {
-  return [
-    `/all-tasks#orderByChild=workerId${
-      user !== null ? (user.role !== "admin" ? "&equalTo=" + user.uid : "") : ""
-    }`
-  ];
-})(TaskComponent);
+const wrappedTask = firestoreConnect(["tasks"])(TaskComponent);
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    tasks: populate(state.firebase, "all-tasks"),
-    user: state.auth.user
+    tasks: state.firestore.data.tasks,
+    user: state.auth.user,
   };
 };
 
-export let Task = connect(mapStateToProps, { deleteNote },null,{forwardRef:true})(wrappedTask);
+export let Task = connect(mapStateToProps, { deleteNote }, null, {
+  forwardRef: true,
+})(wrappedTask);

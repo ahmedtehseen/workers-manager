@@ -5,7 +5,8 @@ import "./DatePicker.css";
 import { DatePicker, MuiPickersUtilsProvider } from "material-ui-pickers";
 import img from "./../../images/chevron-right-solid.svg";
 
-function DatePickerComponent({ setFieldValue, name, value }) {
+function DatePickerComponent(props) {
+  const [date, setDate] = useState(new Date());
   const injectTheme = () => {
     let node = document.getElementById("date-picker-arrow").parentNode
       .parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
@@ -16,9 +17,9 @@ function DatePickerComponent({ setFieldValue, name, value }) {
   return (
     <>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <div className="pickers">
+        <div className="pickers" style={{ marginTop: "9.5px" }}>
           <DatePicker
-            // value={value}
+            value={date}
             leftArrowIcon={
               <img
                 src={img}
@@ -37,10 +38,9 @@ function DatePickerComponent({ setFieldValue, name, value }) {
               />
             }
             onChange={(value) => {
-              console.log(value);
-              setFieldValue("dateOfSubmission", value._i);
+              setDate(value);
+              props.setFieldValue("dateOfSubmission", value);
             }}
-            // name={name}
           />
         </div>
       </MuiPickersUtilsProvider>

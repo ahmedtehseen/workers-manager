@@ -7,15 +7,15 @@ import {
   ADD_TASK_FAIL,
   CREATE_TASK,
   FILE_UPLOAD_FAIL,
-  createTask
+  createTask,
 } from "./AddTask.actions";
 
 const firestore = firebase.firestore();
 
 export class TaskEpic {
-  static uploadFile = action$ =>
+  static uploadFile = (action$) =>
     action$.ofType(ADD_TASK).switchMap(({ payload }) => {
-      return Observable.create(oberver => {
+      return Observable.create((oberver) => {
         const {
           completionDate,
           details,
@@ -24,7 +24,7 @@ export class TaskEpic {
           workerId,
           file,
           adminId,
-          status
+          status,
         } = payload;
         const fileStore = firebase
           .storage()
@@ -33,12 +33,12 @@ export class TaskEpic {
         fileStore.on(
           "state_changed",
           () => {},
-          err => {
+          (err) => {
             console.log(err);
             oberver.next({
               type: FILE_UPLOAD_FAIL,
               payload: err,
-              message: "Task addition fail, Please try again..!"
+              message: "Task addition fail, Please try again..!",
             });
           },
           () => {
@@ -53,7 +53,7 @@ export class TaskEpic {
               workerId,
               timestamp,
               adminId,
-              status
+              status,
             };
             oberver.next(createTask(obj));
           }
@@ -61,27 +61,21 @@ export class TaskEpic {
       });
     });
 
-  static addTask = action$ =>
+  static addTask = (action$) =>
     action$.ofType(CREATE_TASK).switchMap(({ payload }) => {
-      console.log(payload, "all-tasks");
-      return new Observable.concat(
-        firestore
-          .collection("All-tasks")
-          .doc()
-          .add({ ...payload })
-      )
-        .switchMap(res => {
+      return new Observable.concat(firestore.collection("tasks").add(payload))
+        .switchMap((res) => {
           return Observable.of({
             type: ADD_TASK_SUCCESS,
             payload: res,
-            message: "Task added successfully..!"
+            message: "Task added successfully..!",
           });
         })
-        .catch(err => {
+        .catch((err) => {
           return Observable.of({
             type: ADD_TASK_FAIL,
             payload: err,
-            message: "Task addition fail, Please try again..!"
+            message: "Task addition fail, Please try again..!",
           });
         });
     });

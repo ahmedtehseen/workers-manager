@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import {
-  firebaseConnect,
-  populate,
   firestoreConnect
 } from "react-redux-firebase";
 import { connect } from "react-redux";

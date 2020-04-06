@@ -1,198 +1,215 @@
 import React, { Component } from "react";
-import { reduxForm, Field } from "redux-form";
-import { Dialog, FlatButton, RaisedButton, MenuItem } from "material-ui";
+import {
+  Dialog,
+  FlatButton,
+  RaisedButton,
+  MenuItem,
+  TextField,
+} from "material-ui";
 import { connect } from "react-redux";
 import { firebaseConnect } from "react-redux-firebase";
-import { SelectField, TextField, DatePicker } from "redux-form-material-ui";
+import InputLabel from "@material-ui/core/InputLabel";
 import AttachFile from "material-ui/svg-icons/editor/attach-file";
 import { uploadTaskFile, editTask } from "./EditTask.actions";
-import { Formik } from "formik";
-
 import "./EditTask.css";
+import { Formik } from "formik";
+import Select from "@material-ui/core/Select";
+import DatePickerComponent from "../AddTask/DatePickerComponent";
 
 const themeColor = "#7AB15A";
 
-class EditTaskComponent extends Component {
-  onFormSubmit(props) {
-    const file = this.file.files[0];
-    const {
-      dateOfSubmition,
-      details,
-      taskTitle,
-      worker: { name, uid },
-      adminId,
-      status,
-      timestamp,
-      key,
-    } = props;
-    const completionDate = dateOfSubmition.getTime();
-    const objWithFile = {
-      completionDate,
-      details,
-      taskTitle,
-      assignTo: name,
-      workerId: uid,
-      file,
-      adminId,
-      status,
-      timestamp,
-      key,
-    };
-    const objWithoutFile = {
-      completionDate,
-      details,
-      taskTitle,
-      assignTo: name,
-      workerId: uid,
-      adminId,
-      status,
-      timestamp,
-      key,
-    };
-    if (file) {
-      this.props.uploadTaskFile(objWithFile);
-    } else {
-      this.props.editTask(objWithoutFile);
-    }
-    this.props.reset();
-    this.props.closeDialog();
-    this.file = null;
-  }
-
+class EditTaskFormComponent extends Component {
+  state = {
+    worker: "",
+    description: "",
+    selectedDate: new Date(),
+  };
+  handleDateChange = (date) => {
+    this.setState({
+      selectedDate: date,
+    });
+  };
   render() {
-    const { handleSubmit } = this.props;
+    console.log("rendered");
+    console.log(this.props);
+    const { workers } = this.props;
+    const menuItems =
+      workers && workers.filter((item) => item.role === "worker");
+
     return (
-      <Dialog
-        title="Edit Task"
-        modal={false}
-        open={this.props.openEditDialog}
-        onRequestClose={this.props.closeDialog}
-        contentStyle={{ display: "flex", justifyContent: "center" }}
-        className="task-modal"
-      >
-        <form
-          onSubmit={handleSubmit((props) => this.onFormSubmit(props))}
-          className="add-task-form"
-        >
-          <div className="top-task-fileds">
-            <Field
-              name="taskTitle"
-              component={TextField}
-              hintText="Task Title"
-              type="text"
-            />
-            &nbsp;&nbsp;&nbsp;
-            <Field
-              name="worker"
-              component={SelectField}
-              hintText="Select worker name"
-            >
-              {this.props.workers !== null ? (
-                Object.keys(this.props.workers)
-                  .filter((key) => {
-                    return this.props.workers[key].role === "worker";
-                  })
-                  .map((key) => (
-                    <MenuItem
-                      key={key}
-                      value={this.props.workers[key]}
-                      primaryText={this.props.workers[key].name}
+      <div>
+        {this.props.initialValues && (
+          <Formik
+            initialValues={{
+              worker:
+                this.props.initialValues &&
+                this.props.initialValues.worker.name,
+              taskTitle:
+                this.props.initialValues && this.props.initialValues.taskTitle,
+              details:
+                this.props.initialValues && this.props.initialValues.details,
+              dateOfSubmission:
+                this.props.initialValues &&
+                this.props.initialValues.dateOfSubmission,
+            }}
+            onSubmit={(values) => {
+              console.log(values.dateOfSubmission, "checking");
+              const file = this.file.files[0];
+              const completionDate = dateOfSubmission.getTime();
+              const status = "pending";
+              const {
+                dateOfSubmission,
+                details,
+                taskTitle,
+                worker: { name, uid },
+              } = values;
+              const adminId = this.props.user.uid;
+              const objWithFile = {
+                completionDate,
+                details,
+                taskTitle,
+                assignTo: name,
+                workerId: uid,
+                file,
+                adminId,
+                status,
+              };
+              const objWithoutFile = {
+                completionDate,
+                details,
+                taskTitle,
+                assignTo: name,
+                workerId: uid,
+                adminId,
+                status,
+              };
+              if (file) {
+                this.props.uploadTaskFile(objWithFile);
+              } else {
+                this.props.editTask(objWithoutFile);
+              }
+              this.file = null;
+            }}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+              setFieldValue,
+              resetForm,
+            }) => (
+              <Dialog
+                title="Edit Task"
+                modal={false}
+                open={this.props.openEditDialog}
+                onRequestClose={this.props.closeDialog}
+                contentStyle={{ display: "flex", justifyContent: "center" }}
+                className="task-modal"
+              >
+                <form className="add-task-form">
+                  <div>
+                    <TextField
+                      name="taskTitle"
+                      placeholder="Task Title"
+                      value={values.taskTitle}
+                      onChange={handleChange}
+                      fullWidth
+                    ></TextField>
+                  </div>
+                  <div style={{ marginTop: "0.5em" }}>
+                    <InputLabel>Worker</InputLabel>
+                    <Select
+                      id="worker-select"
+                      value={values.worker}
+                      onChange={handleChange}
+                      name="worker"
+                      fullWidth
+                    >
+                      {menuItems !== null &&
+                        menuItems.map((item) => (
+                          <MenuItem
+                            value={item}
+                            key={item.uid}
+                            className="worker-list-item"
+                          >
+                            {item.name}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </div>
+                  <br />
+                  <div className="middle-textarea">
+                    <TextField
+                      placeholder="Describe your task"
+                      onChange={handleChange}
+                      fullWidth
+                      name="details"
+                      value={values.details}
                     />
-                  ))
-              ) : (
-                <MenuItem value={"No user"} primaryText="Please wait..." />
-              )}
-            </Field>
-          </div>
-          <br />
-          <div className="middle-textarea">
-            <Field
-              name="details"
-              multiLine={true}
-              rows={3}
-              component={TextField}
-              hintText="Task Details"
-              fullWidth={true}
-              rowsMax={5}
-            />
-          </div>
-          <br />
-          <div className="bottom-task-fields">
-            <FlatButton
-              label="Add Attachment"
-              backgroundColor={"#fff"}
-              labelPosition="before"
-              style={styles.uploadButton}
-              containerElement="label"
-              hoverColor={"#fff"}
-              icon={<AttachFile color={"#E0E0E0"} />}
-              labelStyle={{ color: "#E0E0E0" }}
-            >
-              <input
-                type="file"
-                style={styles.uploadInput}
-                ref={(file) => {
-                  this.file = file;
-                }}
-              />
-            </FlatButton>
-            &nbsp;&nbsp;&nbsp;
-            <Field
-              name="dateOfSubmition"
-              component={DatePicker}
-              format={null}
-              hintText="Date of Completion"
-            />
-          </div>
-          <RaisedButton
-            buttonStyle={{
-              borderRadius: "2em",
-              width: "150px",
-            }}
-            style={{
-              borderRadius: "2em",
-              width: "150px",
-              marginTop: "2em",
-            }}
-            labelColor="#fff"
-            backgroundColor={themeColor}
-            label="Re-Assign Task"
-            type="submit"
-          />
-        </form>
-      </Dialog>
+                  </div>
+                  <div
+                    className="bottom-task-fields"
+                    style={{ marginTop: "1em" }}
+                  >
+                    <FlatButton
+                      label="Add Attachment"
+                      backgroundColor={"#fff"}
+                      labelPosition="before"
+                      style={styles.uploadButton}
+                      containerElement="label"
+                      hoverColor={"#fff"}
+                      icon={<AttachFile color={"#E0E0E0"} />}
+                      labelStyle={{ color: "#E0E0E0" }}
+                    >
+                      <input
+                        type="file"
+                        style={styles.uploadInput}
+                        ref={(file) => {
+                          this.file = file;
+                        }}
+                      />
+                    </FlatButton>
+                    &nbsp;&nbsp;&nbsp;
+                    <DatePickerComponent
+                      setFieldValue={setFieldValue}
+                      name="dateOfSubmission"
+                      value={values.dateOfSubmission}
+                    />
+                  </div>
+                  <RaisedButton
+                    buttonStyle={{
+                      borderRadius: "2em",
+                      width: "150px",
+                    }}
+                    style={{
+                      borderRadius: "2em",
+                      width: "150px",
+                      marginTop: "2em",
+                    }}
+                    labelColor="#fff"
+                    backgroundColor={themeColor}
+                    label="Re-Assign Task"
+                    type="submit"
+                    onClick={() => {
+                      handleSubmit();
+                      this.props.closeDialog();
+                    }}
+                  />
+                </form>
+              </Dialog>
+            )}
+          </Formik>
+        )}
+      </div>
     );
   }
 }
 
-const wrappedEditTask = firebaseConnect()(EditTaskComponent);
-
-function validate(values) {
-  const errors = {};
-  if (!values.taskTitle) {
-    errors.taskTitle = "Title is required.";
-  }
-
-  if (!values.worker) {
-    errors.worker = "Please select a Worker.";
-  }
-
-  if (!values.details) {
-    errors.details = "Please provide some details.";
-  }
-
-  if (!values.dateOfSubmition) {
-    errors.dateOfSubmition = "Please select submition date.";
-  }
-
-  return errors;
-}
-
-const form = reduxForm({
-  form: "EditTaskForm",
-  validate,
-  enableReinitialize: true,
-});
+const wrappedEditTask = firebaseConnect()(EditTaskFormComponent);
 
 const mapStateToProps = (state) => {
   return {
@@ -207,7 +224,7 @@ export let EditTask = connect(
   { uploadTaskFile, editTask },
   null,
   { forwardRef: true }
-)(form(wrappedEditTask));
+)(wrappedEditTask);
 
 const styles = {
   uploadButton: {
