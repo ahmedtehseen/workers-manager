@@ -78,12 +78,13 @@ class ChatComponent extends Component {
     const key = this.props.match.params.id;
     const worker =
       this.props.users && this.props.users.filter((item) => item.uid === key);
+      console.log(worker)
     return (
       <>
-        {/* <Dashboard /> */}
+     
         <div className="chatbox-container">
           <div>
-            <Subheader>{worker[0].name}</Subheader>
+            {/* <Subheader>{}</Subheader> */}
             <Divider />
           </div>
           <div className="chat-area">

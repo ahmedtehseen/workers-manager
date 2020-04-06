@@ -14,74 +14,65 @@ import {
   ADD_NOTE_FAIL,
   DELETE_NOTE,
   DELETE_NOTE_SUCCESS,
-  // DELETE_NOTE_FAIL,
   DELIVER_TASK,
-  // DELIVER_TASK_SUCCESS,
   DELIVER_TASK_FAIL,
   REASSIGN_TASK,
   REASSIGN_TASK_SUCCESS,
-  REASSIGN_TASK_FAIL
-  // GET_MANAGERS,
-  // GET_MANAGERS_SUCCESS,
-  // GET_MANAGERS_FAIL,
+  REASSIGN_TASK_FAIL,
 } from "./Dashboard.actions";
-import { App } from "../App";
-import { observable } from "rxjs";
+
 const firestore = firebase.firestore();
 
 const deleteCollection = firebase.functions().httpsCallable("deleteNote");
 
 const workersArray = [];
 export class DashboardEpic {
-  static getAllWorkers = action$ =>
+  static getAllWorkers = (action$) =>
     action$.ofType(GET_WORKERS).switchMap(() => {
-      return new Observable(observer => {
+      return new Observable((observer) => {
         firestore
           .collection("users")
           .get()
-          .then(snapshot => {
+          .then((snapshot) => {
             console.log(snapshot.docs);
-            snapshot.docs.forEach(doc => workersArray.push(doc.data()));
+            snapshot.docs.forEach((doc) => workersArray.push(doc.data()));
             return observer.next({
               type: GET_WORKERS_SUCCESS,
-              payload: workersArray
+              payload: workersArray,
             });
           });
-      }).catch(err => {
+      }).catch((err) => {
         return Observable.of({
           type: GET_WORKERS_FAIL,
-          payload: err
+          payload: err,
         });
       });
     });
 
-  static deleteTask = action$ =>
+  static deleteTask = (action$) =>
     action$
       .ofType(DELETE_TASK)
       .switchMap(({ payload }) => {
         return Observable.of(
-          firestore
-            .collection("tasks")
-            .doc(payload)
-            .delete()
+          firestore.collection("tasks").doc(payload).delete()
         );
       })
-      .switchMap(res => {
+      .switchMap((res) => {
         return Observable.of({
           type: DELETE_TASK_SUCCESS,
           payload: res,
-          message: "Task deleted Successfully..!"
+          message: "Task deleted Successfully..!",
         });
       })
-      .catch(err => {
+      .catch((err) => {
         return Observable.of({
           type: DELETE_TASK_FAIL,
           payload: err,
-          message: "Something went wrong, Please try again..!"
+          message: "Something went wrong, Please try again..!",
         });
       });
 
-  static addNote = action$ =>
+  static addNote = (action$) =>
     action$.ofType(ADD_NOTE).switchMap(({ payload }) => {
       const { taskKey } = payload;
       if (payload.by === "admin") {
@@ -96,18 +87,18 @@ export class DashboardEpic {
             .doc()
             .add(payload)
         )
-          .switchMap(res => {
+          .switchMap((res) => {
             return Observable.of({
               type: ADD_NOTE_SUCCESS,
               payload: res,
-              message: "Note added Successfully..!"
+              message: "Note added Successfully..!",
             });
           })
-          .catch(err => {
+          .catch((err) => {
             return Observable.of({
               type: ADD_NOTE_FAIL,
               payload: err,
-              message: "Note addition fail, please try again..!"
+              message: "Note addition fail, please try again..!",
             });
           });
       } else if (payload.by === "worker") {
@@ -122,24 +113,24 @@ export class DashboardEpic {
             .doc()
             .add(payload)
         )
-          .switchMap(res => {
+          .switchMap((res) => {
             return Observable.of({
               type: ADD_NOTE_SUCCESS,
               payload: res,
-              message: "Note added Successfully..!"
+              message: "Note added Successfully..!",
             });
           })
-          .catch(err => {
+          .catch((err) => {
             return Observable.of({
               type: ADD_NOTE_FAIL,
               payload: err,
-              message: "Note addition fail, please try again..!"
+              message: "Note addition fail, please try again..!",
             });
           });
       }
     });
 
-  static deleteNote = action$ =>
+  static deleteNote = (action$) =>
     action$.ofType(DELETE_NOTE).switchMap(({ payload }) => {
       const { taskKey } = payload;
       if (payload.adminNote) {
@@ -148,21 +139,21 @@ export class DashboardEpic {
             path: firestore
               .collection("tasks")
               .doc(taskKey)
-              .collection("adminNotes")
+              .collection("adminNotes"),
           })
         )
-          .switchMap(res => {
+          .switchMap((res) => {
             return Observable.of({
               type: DELETE_NOTE_SUCCESS,
               payload: res,
-              message: "Note deleted..!"
+              message: "Note deleted..!",
             });
           })
-          .catch(err => {
+          .catch((err) => {
             return Observable.of({
               type: ADD_NOTE_FAIL,
               payload: err,
-              message: "Note deletion fail, Please try again..!"
+              message: "Note deletion fail, Please try again..!",
             });
           });
       } else {
@@ -171,72 +162,66 @@ export class DashboardEpic {
             path: firestore
               .collection("tasks")
               .doc(taskKey)
-              .collection("workerNotes")
+              .collection("workerNotes"),
           })
         )
-          .switchMap(res => {
+          .switchMap((res) => {
             return Observable.of({
               type: DELETE_NOTE_SUCCESS,
               payload: res,
-              message: "Note deleted..!"
+              message: "Note deleted..!",
             });
           })
-          .catch(err => {
+          .catch((err) => {
             return Observable.of({
               type: ADD_NOTE_FAIL,
               payload: err,
-              message: "Note deletion fail, Please try again..!"
+              message: "Note deletion fail, Please try again..!",
             });
           });
       }
     });
 
-  static deliverTask = action$ =>
+  static deliverTask = (action$) =>
     action$.ofType(DELIVER_TASK).switchMap(({ payload }) => {
       return Observable.of(
-        firestore
-          .collection("tasks")
-          .doc(payload)
-          .update({
-            status: "completed"
-          })
+        firestore.collection("tasks").doc(payload).update({
+          status: "completed",
+        })
       )
-        .switchMap(res => {
+        .switchMap((res) => {
           return Observable.of({
             type: DELETE_TASK_SUCCESS,
             payload: res,
-            message: "Task delivered Successfully..!"
+            message: "Task delivered Successfully..!",
           });
         })
-        .catch(err => {
+        .catch((err) => {
           return Observable.of({
             type: DELIVER_TASK_FAIL,
             payload: err,
-            message: "Something went wrong, Please deliver again..!"
+            message: "Something went wrong, Please deliver again..!",
           });
         });
     });
 
-  static reAssignTask = action$ =>
+  static reAssignTask = (action$) =>
     action$.ofType(REASSIGN_TASK).switchMap(({ payload }) => {
       return Observable.of(
-        firestore
-          .collection("tasks")
-          .doc(payload)
-          .update({ status: "pending" })
+        firestore.collection("tasks").doc(payload).update({ status: "pending" })
       )
-        .switchMap(res => {
+        .switchMap((res) => {
           return Observable.of({
             type: REASSIGN_TASK_SUCCESS,
             payload: res,
-            message: "Task Re-Assigned Successfully..!"
+            message: "Task Re-Assigned Successfully..!",
           });
         })
-        .catch(err => {
+        .catch((err) => {
           return Observable.of({
             type: REASSIGN_TASK_FAIL,
             payload: err,
-            message: "Something went wrong, Please Assign again..!"
+            message: "Something went wrong, Please Assign again..!",
           });
         });
     });
