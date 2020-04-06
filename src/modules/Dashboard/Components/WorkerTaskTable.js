@@ -5,7 +5,8 @@ import {
   firebaseConnect,
   populate,
   isLoaded,
-  isEmpty
+  isEmpty,
+  firestoreConnect,
 } from "react-redux-firebase";
 import moment from "moment";
 import {
@@ -15,7 +16,7 @@ import {
   TableHeaderColumn,
   TableRow,
   TableRowColumn,
-  Checkbox
+  Checkbox,
 } from "material-ui";
 import Alarm from "material-ui/svg-icons/action/alarm";
 import Layers from "material-ui/svg-icons/maps/layers";
@@ -27,7 +28,7 @@ class WorkerTaskTableComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      openDialog: false
+      openDialog: false,
     };
   }
 
@@ -98,21 +99,17 @@ class WorkerTaskTableComponent extends Component {
   }
 }
 
-const wrappedWorkerTaskTable = firebaseConnect(({ user }) => {
-  return [
-    `/all-tasks#orderByChild=workerId${
-      user !== null ? "&equalTo=" + user.uid : ""
-    }`
-  ];
-})(WorkerTaskTableComponent);
+const wrappedWorkerTaskTable = firestoreConnect(["tasks"])(
+  WorkerTaskTableComponent
+);
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    tasks: populate(state.firebase, "all-tasks"),
-    user: state.auth.user
+    tasks: state.firestore.data.tasks,
+    user: state.auth.user,
   };
 };
 
-export let WorkerTaskTable = connect(mapStateToProps, { deleteTask },null,{forwardRef:true})(
-  wrappedWorkerTaskTable
-);
+export let WorkerTaskTable = connect(mapStateToProps, { deleteTask }, null, {
+  forwardRef: true,
+})(wrappedWorkerTaskTable);
